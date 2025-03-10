@@ -48,6 +48,8 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#there-is-the-answer-and-the-calculation-codes-for-the-questions">There Is The Answer And The Calculation Codes For The Questions</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_2/">Problem 2</a>
@@ -198,29 +200,42 @@ Hints and Resources:¶
 Start from the fundamental laws of motion and gradually build the general solution.
 Use numerical methods or simulation tools to explore scenarios that go beyond simple analytical solutions.
 Consider how this model connects to real-world systems, such as sports, engineering, and astrophysics.
-This task encourages a deep understanding of projectile motion while showcasing its versatility and applicability across various domains.^
-...
-...</p>
+This task encourages a deep understanding of projectile motion while showcasing its versatility and applicability across various domains.^^^^</p>
+<h3 id="there-is-the-answer-and-the-calculation-codes-for-the-questions">There Is The Answer And The Calculation Codes For The Questions</h3>
 <p>import numpy as np
 import matplotlib.pyplot as plt</p>
-<p>def projectile_range(v0, theta, g=9.81):
+<p>def projectile_motion(v0, theta, g=9.81):
     """
-    Calculates the range of a projectile given initial velocity and angle.
+    Computes the range, maximum height, and flight time of a projectile.
     :param v0: Initial velocity (m/s)
     :param theta: Launch angle (degrees)
     :param g: Acceleration due to gravity (m/s^2), default is 9.81 m/s^2
-    :return: Range (m)
+    :return: (range, max_height, flight_time)
     """
     theta_rad = np.radians(theta)
-    return (v0**2 * np.sin(2 * theta_rad)) / g</p>
+    range_ = (v0<strong>2 * np.sin(2 * theta_rad)) / g
+    max_height = (v0</strong>2 * (np.sin(theta_rad))**2) / (2 * g)
+    flight_time = (2 * v0 * np.sin(theta_rad)) / g
+    return range_, max_height, flight_time</p>
+<h1 id="define-parameters">Define parameters</h1>
 <p>v0 = 20  # Initial velocity in m/s
 angles = np.linspace(0, 90, num=100)  # Angle range from 0 to 90 degrees
-ranges = [projectile_range(v0, theta) for theta in angles]</p>
+ranges = []
+max_heights = []
+flight_times = []</p>
+<p>for theta in angles:
+    r, h, t = projectile_motion(v0, theta)
+    ranges.append(r)
+    max_heights.append(h)
+    flight_times.append(t)</p>
+<h1 id="plot-results">Plot results</h1>
 <p>plt.figure(figsize=(8, 5))
-plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+plt.plot(angles, ranges, label='Range (m)')
+plt.plot(angles, max_heights, label='Max Height (m)')
+plt.plot(angles, flight_times, label='Flight Time (s)')
 plt.xlabel('Launch Angle (degrees)')
-plt.ylabel('Range (m)')
-plt.title('Projectile Range as a Function of Launch Angle')
+plt.ylabel('Value')
+plt.title('Projectile Motion Analysis')
 plt.legend()
 plt.grid()
 plt.show()</p>
