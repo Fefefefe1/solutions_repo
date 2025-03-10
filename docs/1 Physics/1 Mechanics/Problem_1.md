@@ -38,3 +38,32 @@ Consider how this model connects to real-world systems, such as sports, engineer
 This task encourages a deep understanding of projectile motion while showcasing its versatility and applicability across various domains.^
 ...
 ...
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def projectile_range(v0, theta, g=9.81):
+    """
+    Calculates the range of a projectile given initial velocity and angle.
+    :param v0: Initial velocity (m/s)
+    :param theta: Launch angle (degrees)
+    :param g: Acceleration due to gravity (m/s^2), default is 9.81 m/s^2
+    :return: Range (m)
+    """
+    theta_rad = np.radians(theta)
+    return (v0**2 * np.sin(2 * theta_rad)) / g
+    
+v0 = 20  # Initial velocity in m/s
+angles = np.linspace(0, 90, num=100)  # Angle range from 0 to 90 degrees
+ranges = [projectile_range(v0, theta) for theta in angles]
+
+plt.figure(figsize=(8, 5))
+plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+plt.xlabel('Launch Angle (degrees)')
+plt.ylabel('Range (m)')
+plt.title('Projectile Range as a Function of Launch Angle')
+plt.legend()
+plt.grid()
+plt.show()
+ 
+
