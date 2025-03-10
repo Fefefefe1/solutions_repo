@@ -1,81 +1,96 @@
 # Problem 1
-Problem 1¶
+# **Projectile Motion: Theoretical Foundation**
 
-Investigating the Range as a Function of the Angle of Projection
+## **1. Governing Equations of Motion**
 
-Motivation:¶
+Projectile motion follows Newton's laws of motion and assumes motion under uniform gravitational acceleration with no air resistance. The fundamental equations arise from Newton’s Second Law:
 
-Projectile motion, while seemingly simple, offers a rich playground for exploring fundamental principles of physics. The problem is straightforward: analyze how the range of a projectile depends on its angle of projection. Yet, beneath this simplicity lies a complex and versatile framework. The equations governing projectile motion involve both linear and quadratic relationships, making them accessible yet deeply insightful.
+\[ \mathbf{F} = m\mathbf{a} \]
 
-What makes this topic particularly compelling is the number of free parameters involved in these equations, such as initial velocity, gravitational acceleration, and launch height. These parameters give rise to a diverse set of solutions that can describe a wide array of real-world phenomena, from the arc of a soccer ball to the trajectory of a rocket.
+Since the only force acting on the projectile (neglecting air resistance) is gravity, we have:
 
-Task:¶
+\[ F_y = -mg, \quad F_x = 0 \]
 
-1 Theoretical Foundation:
+Thus, the equations of motion can be written as:
 
-Begin by deriving the governing equations of motion from fundamental principles. This involves solving a basic differential equation to establish the general form of the motion.
-Highlight how variations in initial conditions lead to a family of solutions.
-2 Analysis of the Range:
+\[ m a_x = 0 \quad \Rightarrow \quad a_x = 0 \]
+\[ m a_y = -mg \quad \Rightarrow \quad a_y = -g \]
 
-Investigate how the horizontal range depends on the angle of projection.
-Discuss how changes in other parameters, such as initial velocity and gravitational acceleration, influence the relationship.
-3 Practical Applications:
+Since acceleration is the second derivative of position, we get:
 
-Reflect on how this model can be adapted to describe various real-world situations, such as projectiles launched on uneven terrain or in the presence of air resistance.
-4 Implementation:
+\[ \frac{d^2x}{dt^2} = 0, \quad \frac{d^2y}{dt^2} = -g \]
 
-Develop a computational tool or algorithm to simulate projectile motion.
-Visualize the range as a function of the angle of projection for different sets of initial conditions.
-Deliverables:¶
-A Markdown document with Python script or notebook implementing the simulations.
-A detailed description of the family of solutions derived from the governing equations.
-Graphical representations of the range versus angle of projection, highlighting how different parameters influence the curve.
-A discussion on the limitations of the idealized model and suggestions for incorporating more realistic factors, such as drag or wind.
-Hints and Resources:¶
-Start from the fundamental laws of motion and gradually build the general solution.
-Use numerical methods or simulation tools to explore scenarios that go beyond simple analytical solutions.
-Consider how this model connects to real-world systems, such as sports, engineering, and astrophysics.
-This task encourages a deep understanding of projectile motion while showcasing its versatility and applicability across various domains.^^^^
-### There Is The Answer And The Calculation Codes For The Questions
-import numpy as np
-import matplotlib.pyplot as plt
+## **2. Solving the Differential Equations**
 
-def projectile_motion(v0, theta, g=9.81):
-    """
-    Computes the range, maximum height, and flight time of a projectile.
-    :param v0: Initial velocity (m/s)
-    :param theta: Launch angle (degrees)
-    :param g: Acceleration due to gravity (m/s^2), default is 9.81 m/s^2
-    :return: (range, max_height, flight_time)
-    """
-    theta_rad = np.radians(theta)
-    range_ = (v0**2 * np.sin(2 * theta_rad)) / g
-    max_height = (v0**2 * (np.sin(theta_rad))**2) / (2 * g)
-    flight_time = (2 * v0 * np.sin(theta_rad)) / g
-    return range_, max_height, flight_time
+### **Horizontal Motion**
 
-# Define parameters
-v0 = 20  # Initial velocity in m/s
-angles = np.linspace(0, 90, num=100)  # Angle range from 0 to 90 degrees
-ranges = []
-max_heights = []
-flight_times = []
+Integrating the horizontal acceleration equation:
 
-for theta in angles:
-    r, h, t = projectile_motion(v0, theta)
-    ranges.append(r)
-    max_heights.append(h)
-    flight_times.append(t)
+\[ \frac{dv_x}{dt} = 0 \]
 
-# Plot results
-plt.figure(figsize=(8, 5))
-plt.plot(angles, ranges, label='Range (m)')
-plt.plot(angles, max_heights, label='Max Height (m)')
-plt.plot(angles, flight_times, label='Flight Time (s)')
-plt.xlabel('Launch Angle (degrees)')
-plt.ylabel('Value')
-plt.title('Projectile Motion Analysis')
-plt.legend()
-plt.grid()
-plt.show()
+\[ v_x = v_0 \cos \theta \]
+
+Since velocity is the derivative of position:
+
+\[ \frac{dx}{dt} = v_0 \cos \theta \]
+
+Integrating again:
+
+\[ x(t) = v_0 \cos \theta \cdot t \]
+
+### **Vertical Motion**
+
+Integrating the vertical acceleration equation:
+
+\[ \frac{dv_y}{dt} = -g \]
+
+\[ v_y = v_0 \sin \theta - gt \]
+
+Since velocity is the derivative of position:
+
+\[ \frac{dy}{dt} = v_0 \sin \theta - gt \]
+
+Integrating again:
+
+\[ y(t) = v_0 \sin \theta \cdot t - \frac{1}{2} g t^2 \]
+
+## **3. Range of the Projectile**
+
+The range \( R \) is the horizontal distance the projectile travels before hitting the ground (i.e., when \( y = 0 \)).
+
+Setting \( y(t) = 0 \):
+
+\[ 0 = v_0 \sin \theta \cdot t - \frac{1}{2} g t^2 \]
+
+Solving for \( t \), we get:
+
+\[ t = \frac{2 v_0 \sin \theta}{g} \]
+
+Substituting into the equation for \( x(t) \):
+
+\[ R = v_0 \cos \theta \cdot \frac{2 v_0 \sin \theta}{g} \]
+
+Using the identity \( 2 \sin \theta \cos \theta = \sin 2\theta \), we obtain the range formula:
+
+\[ R = \frac{v_0^2 \sin 2\theta}{g} \]
+
+## **4. Family of Solutions and Dependence on Initial Conditions**
+
+- The range depends on both the initial velocity \( v_0 \) and the launch angle \( \theta \).
+- The **maximum range** occurs at \( \theta = 45^\circ \), since \( \sin 2\theta \) is maximized at \( 90^\circ \).
+- The **same range** can be achieved with complementary angles \( \theta_1 \) and \( \theta_2 = 90^\circ - \theta_1 \), as \( \sin 2\theta \) is the same for both.
+
+### **Effect of Gravity**
+
+- Increasing gravity \( g \) decreases the range since \( R \propto 1/g \).
+- Lower gravity environments (e.g., Moon or Mars) allow longer ranges for the same launch velocity.
+
+### **Effect of Initial Velocity**
+
+- The range is **quadratic** in \( v_0 \), meaning a slight increase in velocity results in a significantly larger range.
+
+## **Conclusion**
+
+The projectile motion equations provide deep insight into real-world applications, from sports physics to space exploration. The range formula highlights the key dependencies on angle, velocity, and gravity, illustrating the elegance of motion under constant acceleration.
+
 
