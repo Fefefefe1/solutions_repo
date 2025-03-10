@@ -175,58 +175,156 @@
 <h1 id="projectile-motion-theoretical-foundation"><strong>Projectile Motion: Theoretical Foundation</strong></h1>
 <h2 id="1-governing-equations-of-motion"><strong>1. Governing Equations of Motion</strong></h2>
 <p>Projectile motion follows Newton's laws of motion and assumes motion under uniform gravitational acceleration with no air resistance. The fundamental equations arise from Newton’s Second Law:</p>
-<div class="arithmatex">\[ \mathbf{F} = m\mathbf{a} \]</div>
+<div class="arithmatex">\[\mathbf{F}=m\mathbf{a}\]</div>
 <p>Since the only force acting on the projectile (neglecting air resistance) is gravity, we have:</p>
-<div class="arithmatex">\[ F_y = -mg, \quad F_x = 0 \]</div>
+<div class="arithmatex">\[F_y=-mg,\quad F_x=0\]</div>
 <p>Thus, the equations of motion can be written as:</p>
-<p>[ m a_x = 0 \quad \Rightarrow \quad a_x = 0 ]
-[ m a_y = -mg \quad \Rightarrow \quad a_y = -g ]</p>
+<div class="arithmatex">\[m a_x=0 \quad \Rightarrow \quad a_x=0$$
+$$m a_y=-mg \quad \Rightarrow \quad a_y=-g\]</div>
 <p>Since acceleration is the second derivative of position, we get:</p>
-<div class="arithmatex">\[ \frac{d^2x}{dt^2} = 0, \quad \frac{d^2y}{dt^2} = -g \]</div>
+<div class="arithmatex">\[\frac{d^2x}{dt^2}=0,\quad \frac{d^2y}{dt^2}=-g\]</div>
 <h2 id="2-solving-the-differential-equations"><strong>2. Solving the Differential Equations</strong></h2>
 <h3 id="horizontal-motion"><strong>Horizontal Motion</strong></h3>
 <p>Integrating the horizontal acceleration equation:</p>
-<div class="arithmatex">\[ \frac{dv_x}{dt} = 0 \]</div>
-<div class="arithmatex">\[ v_x = v_0 \cos \theta \]</div>
+<div class="arithmatex">\[\frac{dv_x}{dt}=0\]</div>
+<div class="arithmatex">\[v_x=v_0\cos\theta\]</div>
 <p>Since velocity is the derivative of position:</p>
-<div class="arithmatex">\[ \frac{dx}{dt} = v_0 \cos \theta \]</div>
+<div class="arithmatex">\[\frac{dx}{dt}=v_0\cos\theta\]</div>
 <p>Integrating again:</p>
-<div class="arithmatex">\[ x(t) = v_0 \cos \theta \cdot t \]</div>
+<div class="arithmatex">\[x(t)=v_0\cos\theta\cdot t\]</div>
 <h3 id="vertical-motion"><strong>Vertical Motion</strong></h3>
 <p>Integrating the vertical acceleration equation:</p>
-<div class="arithmatex">\[ \frac{dv_y}{dt} = -g \]</div>
-<div class="arithmatex">\[ v_y = v_0 \sin \theta - gt \]</div>
+<div class="arithmatex">\[\frac{dv_y}{dt}=-g\]</div>
+<div class="arithmatex">\[v_y=v_0\sin\theta-gt\]</div>
 <p>Since velocity is the derivative of position:</p>
-<div class="arithmatex">\[ \frac{dy}{dt} = v_0 \sin \theta - gt \]</div>
+<div class="arithmatex">\[\frac{dy}{dt}=v_0\sin\theta-gt\]</div>
 <p>Integrating again:</p>
-<div class="arithmatex">\[ y(t) = v_0 \sin \theta \cdot t - \frac{1}{2} g t^2 \]</div>
+<div class="arithmatex">\[y(t)=v_0\sin\theta\cdot t-\frac{1}{2} g t^2\]</div>
 <h2 id="3-range-of-the-projectile"><strong>3. Range of the Projectile</strong></h2>
-<p>The range <span class="arithmatex">\( R \)</span> is the horizontal distance the projectile travels before hitting the ground (i.e., when <span class="arithmatex">\( y = 0 \)</span>).</p>
-<p>Setting <span class="arithmatex">\( y(t) = 0 \)</span>:</p>
-<div class="arithmatex">\[ 0 = v_0 \sin \theta \cdot t - \frac{1}{2} g t^2 \]</div>
-<p>Solving for <span class="arithmatex">\( t \)</span>, we get:</p>
-<div class="arithmatex">\[ t = \frac{2 v_0 \sin \theta}{g} \]</div>
-<p>Substituting into the equation for <span class="arithmatex">\( x(t) \)</span>:</p>
-<div class="arithmatex">\[ R = v_0 \cos \theta \cdot \frac{2 v_0 \sin \theta}{g} \]</div>
-<p>Using the identity <span class="arithmatex">\( 2 \sin \theta \cos \theta = \sin 2\theta \)</span>, we obtain the range formula:</p>
-<div class="arithmatex">\[ R = \frac{v_0^2 \sin 2\theta}{g} \]</div>
+<p>The range <span class="arithmatex">\(R\)</span> is the horizontal distance the projectile travels before hitting the ground (i.e., when <span class="arithmatex">\(y=0\)</span>).</p>
+<p>Setting <span class="arithmatex">\(y(t)=0\)</span>:</p>
+<div class="arithmatex">\[0=v_0\sin\theta\cdot t-\frac{1}{2} g t^2\]</div>
+<p>Solving for <span class="arithmatex">\(t\)</span>, we get:</p>
+<div class="arithmatex">\[t=\frac{2 v_0\sin\theta}{g}\]</div>
+<p>Substituting into the equation for <span class="arithmatex">\(x(t)\)</span>:</p>
+<div class="arithmatex">\[R=v_0\cos\theta\cdot\frac{2 v_0\sin\theta}{g}\]</div>
+<p>Using the identity <span class="arithmatex">\(2\sin\theta\cos\theta=\sin 2\theta\)</span>, we obtain the range formula:</p>
+<div class="arithmatex">\[R=\frac{v_0^2\sin 2\theta}{g}\]</div>
 <h2 id="4-family-of-solutions-and-dependence-on-initial-conditions"><strong>4. Family of Solutions and Dependence on Initial Conditions</strong></h2>
 <ul>
-<li>The range depends on both the initial velocity <span class="arithmatex">\( v_0 \)</span> and the launch angle <span class="arithmatex">\( \theta \)</span>.</li>
-<li>The <strong>maximum range</strong> occurs at <span class="arithmatex">\( \theta = 45^\circ \)</span>, since <span class="arithmatex">\( \sin 2\theta \)</span> is maximized at <span class="arithmatex">\( 90^\circ \)</span>.</li>
-<li>The <strong>same range</strong> can be achieved with complementary angles <span class="arithmatex">\( \theta_1 \)</span> and <span class="arithmatex">\( \theta_2 = 90^\circ - \theta_1 \)</span>, as <span class="arithmatex">\( \sin 2\theta \)</span> is the same for both.</li>
+<li>The range depends on both the initial velocity <span class="arithmatex">\(v_0\)</span> and the launch angle <span class="arithmatex">\(\theta\)</span>.</li>
+<li>The <strong>maximum range</strong> occurs at <span class="arithmatex">\(\theta=45^\circ\)</span>, since <span class="arithmatex">\(\sin 2\theta\)</span> is maximized at <span class="arithmatex">\(90^\circ\)</span>.</li>
+<li>The <strong>same range</strong> can be achieved with complementary angles <span class="arithmatex">\(\theta_1\)</span> and <span class="arithmatex">\(\theta_2=90^\circ-\theta_1\)</span>, as <span class="arithmatex">\(\sin 2\theta\)</span> is the same for both.</li>
 </ul>
 <h3 id="effect-of-gravity"><strong>Effect of Gravity</strong></h3>
 <ul>
-<li>Increasing gravity <span class="arithmatex">\( g \)</span> decreases the range since <span class="arithmatex">\( R \propto 1/g \)</span>.</li>
+<li>Increasing gravity <span class="arithmatex">\(g\)</span> decreases the range since <span class="arithmatex">\(R\propto 1/g\)</span>.</li>
 <li>Lower gravity environments (e.g., Moon or Mars) allow longer ranges for the same launch velocity.</li>
 </ul>
 <h3 id="effect-of-initial-velocity"><strong>Effect of Initial Velocity</strong></h3>
 <ul>
-<li>The range is <strong>quadratic</strong> in <span class="arithmatex">\( v_0 \)</span>, meaning a slight increase in velocity results in a significantly larger range.</li>
+<li>The range is <strong>quadratic</strong> in <span class="arithmatex">\(v_0\)</span>, meaning a slight increase in velocity results in a significantly larger range.</li>
 </ul>
 <h2 id="conclusion"><strong>Conclusion</strong></h2>
 <p>The projectile motion equations provide deep insight into real-world applications, from sports physics to space exploration. The range formula highlights the key dependencies on angle, velocity, and gravity, illustrating the elegance of motion under constant acceleration.</p>
+<h3 id="phyton-implementation">Phyton İmplementation</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+class ProjectileSimulator:
+    def __init__(self, v0, g=9.81):
+        """
+        Initialize simulator with initial velocity and gravitational acceleration
+        v0: initial velocity (m/s)
+        g: gravitational acceleration (m/s²)
+        """
+        self.v0 = v0
+        self.g = g
+
+    def calculate_range(self, angle_deg):
+        """
+        Calculate range for a given angle in degrees
+        Returns range in meters
+        """
+        # Convert angle to radians
+        angle_rad = np.radians(angle_deg)
+        # Range formula: R = (v0² * sin(2θ)) / g
+        range = (self.v0**2 * np.sin(2 * angle_rad)) / self.g
+        return range
+
+    def calculate_trajectory(self, angle_deg, num_points=100):
+        """
+        Calculate x, y coordinates of trajectory for a given angle
+        Returns tuple of (x_coords, y_coords)
+        """
+        angle_rad = np.radians(angle_deg)
+        # Time of flight: t = (2 * v0 * sin(θ)) / g
+        t_flight = (2 * self.v0 * np.sin(angle_rad)) / self.g
+        t = np.linspace(0, t_flight, num_points)
+
+        # x = v0 * cos(θ) * t
+        x = self.v0 * np.cos(angle_rad) * t
+        # y = v0 * sin(θ) * t - (1/2) * g * t²
+        y = self.v0 * np.sin(angle_rad) * t - 0.5 * self.g * t**2
+
+        return x, y
+
+def plot_range_vs_angle(simulator, angles):
+    """Plot range as a function of angle"""
+    ranges = [simulator.calculate_range(angle) for angle in angles]
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(angles, ranges, 'b-', label=f'v0 = {simulator.v0} m/s')
+    plt.grid(True)
+    plt.xlabel('Launch Angle (degrees)')
+    plt.ylabel('Range (meters)')
+    plt.title('Projectile Range vs Launch Angle')
+    plt.legend()
+    plt.show()
+
+def plot_trajectory(simulator, angles):
+    """Plot trajectories for multiple angles"""
+    plt.figure(figsize=(12, 8))
+
+    for angle in angles:
+        x, y = simulator.calculate_trajectory(angle)
+        plt.plot(x, y, label=f'{angle}°')
+
+    plt.grid(True)
+    plt.xlabel('Distance (meters)')
+    plt.ylabel('Height (meters)')
+    plt.title(f'Projectile Trajectories (v0 = {simulator.v0} m/s)')
+    plt.legend()
+    plt.axis('equal')
+    plt.show()
+
+# Main execution
+if __name__ == "__main__":
+    # Test different initial velocities
+    initial_velocities = [10, 20, 30]  # m/s
+    angles = np.arange(0, 90.1, 0.5)  # 0 to 90 degrees with 0.5° steps
+
+    # Plot range vs angle for different velocities
+    plt.figure(figsize=(10, 6))
+    for v0 in initial_velocities:
+        simulator = ProjectileSimulator(v0)
+        ranges = [simulator.calculate_range(angle) for angle in angles]
+        plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+
+    plt.grid(True)
+    plt.xlabel('Launch Angle (degrees)')
+    plt.ylabel('Range (meters)')
+    plt.title('Projectile Range vs Launch Angle for Different Velocities')
+    plt.legend()
+    plt.show()
+
+    # Plot sample trajectories for one velocity
+    sample_simulator = ProjectileSimulator(v0=20)
+    sample_angles = [15, 30, 45, 60, 75]
+    plot_trajectory(sample_simulator, sample_angles)
+</code></pre>
+<h2 id="plot">Plot</h2>
+<p><img alt="alt text" src="../image.png"/></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
