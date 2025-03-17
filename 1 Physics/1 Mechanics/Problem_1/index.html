@@ -218,7 +218,7 @@ $$m a_y=-mg \quad \Rightarrow \quad a_y=-g\]</div>
 </ul>
 <h3 id="effect-of-gravity"><strong>Effect of Gravity</strong></h3>
 <ul>
-<li>Increasing gravity <span class="arithmatex">\(g\)</span> decreases the range since <span class="arithmatex">\(R\propto \frac{1}{g}\)</span>.</li>
+<li>Increasing gravity <span class="arithmatex">\(g\)</span> decreases the range since <span class="arithmatex">\(R\propto 1/g\)</span>.</li>
 <li>Lower gravity environments (e.g., Moon or Mars) allow longer ranges for the same launch velocity.</li>
 </ul>
 <h3 id="effect-of-initial-velocity"><strong>Effect of Initial Velocity</strong></h3>
@@ -299,128 +299,106 @@ $$m a_y=-mg \quad \Rightarrow \quad a_y=-g\]</div>
 <h2 id="2-dependence-of-range-on-initial-velocity-and-gravity_1"><strong>2. Dependence of Range on Initial Velocity and Gravity</strong></h2>
 <h3 id="effect-of-initial-velocity_2"><strong>Effect of Initial Velocity</strong></h3>
 <p>From the range equation:</p>
-<div class="arithmatex">\[R\propto v_0^2\]</div>
-<ul>
-<li>Doubling the initial velocity results in a fourfold increase in range.</li>
-<li>The relationship between range and velocity is <strong>quadratic</strong>, meaning small increases in velocity can significantly impact the range.</li>
-</ul>
-<h3 id="effect-of-gravitational-acceleration_1"><strong>Effect of Gravitational Acceleration</strong></h3>
-<p>From the range equation:</p>
-<div class="arithmatex">\[R\propto\frac{1}{g}\]</div>
-<ul>
-<li>An increase in gravitational acceleration reduces the range.</li>
-<li>On planets with lower gravity (e.g., the Moon, Mars), a projectile launched with the same velocity and angle will travel much farther than on Earth.</li>
-</ul>
-<h2 id="3-practical-applications-of-range-analysis_1"><strong>3. Practical Applications of Range Analysis</strong></h2>
-<h3 id="sports-science_1"><strong>Sports Science</strong></h3>
-<ul>
-<li>In ballistics and sports like basketball, soccer, and golf, understanding range helps optimize shooting angles for maximum distance or accuracy.</li>
-<li>Athletes adjust their throwing or kicking angles based on desired projectile motion.</li>
-</ul>
-<h3 id="engineering-and-defense_1"><strong>Engineering and Defense</strong></h3>
-<ul>
-<li>Artillery and missile trajectory calculations rely on precise range equations to hit targets efficiently.</li>
-<li>Engineers design launch systems considering variations in <span class="arithmatex">\(g\)</span> due to altitude or planetary conditions.</li>
-</ul>
-<h3 id="space-exploration_1"><strong>Space Exploration</strong></h3>
-<ul>
-<li>Rocket launches consider Earth's gravity and initial velocity to optimize fuel efficiency and trajectory.</li>
-<li>Space agencies simulate projectile motion under different gravitational conditions for extraterrestrial landings.</li>
-</ul>
-<h2 id="conclusion_2"><strong>Conclusion</strong></h2>
-<p>The range of a projectile is influenced significantly by the angle of projection, initial velocity, and gravitational acceleration. The mathematical relationships governing projectile motion allow for precise predictions, leading to various applications in sports, engineering, and space exploration.</p>
-<h3 id="python-implementation">Python Implementation</h3>
-<p>```python
-import numpy as np
-import matplotlib.pyplot as plt</p>
-<p>class ProjectileSimulator:
-    def <strong>init</strong>(self, v0, g=9.81):
+<p>$$R\propto v_0^</p>
+<h3 id="phyton-implementation">Phyton İmplementation</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+class ProjectileSimulator:
+    def __init__(self, v0, g=9.81):
         """
         Initialize simulator with initial velocity and gravitational acceleration
         v0: initial velocity (m/s)
         g: gravitational acceleration (m/s²)
         """
         self.v0 = v0
-        self.g = g</p>
-<pre><code>def calculate_range(self, angle_deg):
-    """
-    Calculate range for a given angle in degrees
-    Returns range in meters
-    """
-    # Convert angle to radians
-    angle_rad = np.radians(angle_deg)
-    # Range formula: R = (v0² * sin(2θ)) / g
-    range_ = (self.v0**2 * np.sin(2 * angle_rad)) / self.g
-    return range_
+        self.g = g
 
-def calculate_trajectory(self, angle_deg, num_points=100):
-    """
-    Calculate x, y coordinates of trajectory for a given angle
-    Returns tuple of (x_coords, y_coords)
-    """
-    angle_rad = np.radians(angle_deg)
-    # Time of flight: t = (2 * v0 * sin(θ)) / g
-    t_flight = (2 * self.v0 * np.sin(angle_rad)) / self.g
-    t = np.linspace(0, t_flight, num_points)
+    def calculate_range(self, angle_deg):
+        """
+        Calculate range for a given angle in degrees
+        Returns range in meters
+        """
+        # Convert angle to radians
+        angle_rad = np.radians(angle_deg)
+        # Range formula: R = (v0² * sin(2θ)) / g
+        range = (self.v0**2 * np.sin(2 * angle_rad)) / self.g
+        return range
 
-    # x = v0 * cos(θ) * t
-    x = self.v0 * np.cos(angle_rad) * t
-    # y = v0 * sin(θ) * t - (1/2) * g * t²
-    y = self.v0 * np.sin(angle_rad) * t - 0.5 * self.g * t**2
+    def calculate_trajectory(self, angle_deg, num_points=100):
+        """
+        Calculate x, y coordinates of trajectory for a given angle
+        Returns tuple of (x_coords, y_coords)
+        """
+        angle_rad = np.radians(angle_deg)
+        # Time of flight: t = (2 * v0 * sin(θ)) / g
+        t_flight = (2 * self.v0 * np.sin(angle_rad)) / self.g
+        t = np.linspace(0, t_flight, num_points)
 
-    return x, y
-</code></pre>
-<p>def plot_range_vs_angle(simulator, angles):
+        # x = v0 * cos(θ) * t
+        x = self.v0 * np.cos(angle_rad) * t
+        # y = v0 * sin(θ) * t - (1/2) * g * t²
+        y = self.v0 * np.sin(angle_rad) * t - 0.5 * self.g * t**2
+
+        return x, y
+
+def plot_range_vs_angle(simulator, angles):
     """Plot range as a function of angle"""
-    ranges = [simulator.calculate_range(angle) for angle in angles]</p>
-<pre><code>plt.figure(figsize=(10, 6))
-plt.plot(angles, ranges, 'b-', label=f'v0 = {simulator.v0} m/s')
-plt.grid(True)
-plt.xlabel('Launch Angle (degrees)')
-plt.ylabel('Range (meters)')
-plt.title('Projectile Range vs Launch Angle')
-plt.legend()
-plt.show()
-</code></pre>
-<p>def plot_trajectory(simulator, angles):
-    """Plot trajectories for multiple angles"""
-    plt.figure(figsize=(12, 8))</p>
-<pre><code>for angle in angles:
-    x, y = simulator.calculate_trajectory(angle)
-    plt.plot(x, y, label=f'{angle}°')
+    ranges = [simulator.calculate_range(angle) for angle in angles]
 
-plt.grid(True)
-plt.xlabel('Distance (meters)')
-plt.ylabel('Height (meters)')
-plt.title(f'Projectile Trajectories (v0 = {simulator.v0} m/s)')
-plt.legend()
-plt.axis('equal')
-plt.show()
-</code></pre>
-<h1 id="main-execution">Main execution</h1>
-<p>if <strong>name</strong> == "<strong>main</strong>":
+    plt.figure(figsize=(10, 6))
+    plt.plot(angles, ranges, 'b-', label=f'v0 = {simulator.v0} m/s')
+    plt.grid(True)
+    plt.xlabel('Launch Angle (degrees)')
+    plt.ylabel('Range (meters)')
+    plt.title('Projectile Range vs Launch Angle')
+    plt.legend()
+    plt.show()
+
+def plot_trajectory(simulator, angles):
+    """Plot trajectories for multiple angles"""
+    plt.figure(figsize=(12, 8))
+
+    for angle in angles:
+        x, y = simulator.calculate_trajectory(angle)
+        plt.plot(x, y, label=f'{angle}°')
+
+    plt.grid(True)
+    plt.xlabel('Distance (meters)')
+    plt.ylabel('Height (meters)')
+    plt.title(f'Projectile Trajectories (v0 = {simulator.v0} m/s)')
+    plt.legend()
+    plt.axis('equal')
+    plt.show()
+
+# Main execution
+if __name__ == "__main__":
     # Test different initial velocities
     initial_velocities = [10, 20, 30]  # m/s
-    angles = np.arange(0, 90.1, 0.5)  # 0 to 90 degrees with 0.5° steps</p>
-<pre><code># Plot range vs angle for different velocities
-plt.figure(figsize=(10, 6))
-for v0 in initial_velocities:
-    simulator = ProjectileSimulator(v0)
-    ranges = [simulator.calculate_range(angle) for angle in angles]
-    plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+    angles = np.arange(0, 90.1, 0.5)  # 0 to 90 degrees with 0.5° steps
 
-plt.grid(True)
-plt.xlabel('Launch Angle (degrees)')
-plt.ylabel('Range (meters)')
-plt.title('Projectile Range vs Launch Angle for Different Velocities')
-plt.legend()
-plt.show()
+    # Plot range vs angle for different velocities
+    plt.figure(figsize=(10, 6))
+    for v0 in initial_velocities:
+        simulator = ProjectileSimulator(v0)
+        ranges = [simulator.calculate_range(angle) for angle in angles]
+        plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
 
-# Plot sample trajectories for one velocity
-sample_simulator = ProjectileSimulator(v0=20)
-sample_angles = [15, 30, 45, 60, 75]
-plot_trajectory(sample_simulator, sample_angles)
+    plt.grid(True)
+    plt.xlabel('Launch Angle (degrees)')
+    plt.ylabel('Range (meters)')
+    plt.title('Projectile Range vs Launch Angle for Different Velocities')
+    plt.legend()
+    plt.show()
+
+    # Plot sample trajectories for one velocity
+    sample_simulator = ProjectileSimulator(v0=20)
+    sample_angles = [15, 30, 45, 60, 75]
+    plot_trajectory(sample_simulator, sample_angles)
 </code></pre>
+<h2 id="table-for-range-and-angle">Table For Range And Angle</h2>
+<p><img alt="alt text" src="../image.png"/>
+<img alt="alt text" src="../image-1.png"/></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
