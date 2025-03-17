@@ -92,7 +92,105 @@ $$R=\frac{v_0^2\sin 2\theta}{g}$$
 ## **Conclusion**
 
 The projectile motion equations provide deep insight into real-world applications, from sports physics to space exploration. The range formula highlights the key dependencies on angle, velocity, and gravity, illustrating the elegance of motion under constant acceleration.
+# **Projectile Motion: Theoretical Analysis of Range**
 
+## **1. Relationship Between Horizontal Range and Angle of Projection**
+
+The horizontal range $R$ of a projectile is defined as the horizontal distance it travels before returning to its initial height. The standard equation for range, derived from kinematic equations, is:
+
+$$R=\frac{v_0^2\sin 2\theta}{g}$$
+
+where:
+- $v_0$ is the initial velocity,
+- $\theta$ is the angle of projection,
+- $g$ is the acceleration due to gravity.
+
+### **Effect of Angle on Range**
+
+- The function $\sin 2\theta$ determines how the range varies with the angle of projection.
+- The range is maximized when $\sin 2\theta=1$, which occurs at $\theta=45^\circ$.
+- The same range can be obtained for complementary angles $\theta$ and $90^\circ-\theta$ because $\sin 2\theta$ has the same value for both.
+
+Thus, for any initial velocity, the two angles that yield the same range are given by:
+
+$$\theta_1+\theta_2=90^\circ$$
+
+### **Graphical Representation**
+
+The function $R(\theta)$ follows a symmetric pattern, reaching its maximum at $45^\circ$ and decreasing symmetrically for angles above and below this value.
+
+## **2. Dependence of Range on Initial Velocity and Gravity**
+
+### **Effect of Initial Velocity**
+
+From the range equation:
+
+$$R\propto v_0^2$$
+
+- Doubling the initial velocity results in a fourfold increase in range.
+- The relationship between range and velocity is **quadratic**, meaning small increases in velocity can significantly impact the range.
+
+### **Effect of Gravitational Acceleration**
+
+From the range equation:
+
+$$R\propto\frac{1}{g}$$
+
+- An increase in gravitational acceleration reduces the range.
+- On planets with lower gravity (e.g., the Moon, Mars), a projectile launched with the same velocity and angle will travel much farther than on Earth.
+
+## **3. Practical Applications of Range Analysis**
+
+### **Sports Science**
+- In ballistics and sports like basketball, soccer, and golf, understanding range helps optimize shooting angles for maximum distance or accuracy.
+- Athletes adjust their throwing or kicking angles based on desired projectile motion.
+
+### **Engineering and Defense**
+- Artillery and missile trajectory calculations rely on precise range equations to hit targets efficiently.
+- Engineers design launch systems considering variations in $g$ due to altitude or planetary conditions.
+
+### **Space Exploration**
+- Rocket launches consider Earth's gravity and initial velocity to optimize fuel efficiency and trajectory.
+- Space agencies simulate projectile motion under different gravitational conditions for extraterrestrial landings.
+
+## **Conclusion**
+
+The range of a projectile is influenced significantly by the angle of projection, initial velocity, and gravitational acceleration. The mathematical relationships governing projectile motion allow for precise predictions, leading to various applications in sports, engineering, and space exploration.
+
+# **Projectile Motion: Theoretical Analysis and Applications**
+
+## **1. Relationship Between Horizontal Range and Angle of Projection**
+
+The horizontal range $R$ of a projectile is defined as the horizontal distance it travels before returning to its initial height. The standard equation for range, derived from kinematic equations, is:
+
+$$R=\frac{v_0^2\sin 2\theta}{g}$$
+
+where:
+- $v_0$ is the initial velocity,
+- $\theta$ is the angle of projection,
+- $g$ is the acceleration due to gravity.
+
+### **Effect of Angle on Range**
+
+- The function $\sin 2\theta$ determines how the range varies with the angle of projection.
+- The range is maximized when $\sin 2\theta=1$, which occurs at $\theta=45^\circ$.
+- The same range can be obtained for complementary angles $\theta$ and $90^\circ-\theta$ because $\sin 2\theta$ has the same value for both.
+
+Thus, for any initial velocity, the two angles that yield the same range are given by:
+
+$$\theta_1+\theta_2=90^\circ$$
+
+### **Graphical Representation**
+
+The function $R(\theta)$ follows a symmetric pattern, reaching its maximum at $45^\circ$ and decreasing symmetrically for angles above and below this value.
+
+## **2. Dependence of Range on Initial Velocity and Gravity**
+
+### **Effect of Initial Velocity**
+
+From the range equation:
+
+$$R\propto v_0^
 ### Phyton İmplementation
 
 ```python
@@ -192,6 +290,7 @@ if __name__ == "__main__":
     plot_trajectory(sample_simulator, sample_angles)
 ```
 
-## Plot
+## Table For Range And Angle
 
 ![alt text](image.png)
+![alt text](image-1.png)
