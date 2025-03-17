@@ -82,7 +82,7 @@ $$R=\frac{v_0^2\sin 2\theta}{g}$$
 
 ### **Effect of Gravity**
 
-- Increasing gravity $g$ decreases the range since $R\propto \frac{1}{g}$.
+- Increasing gravity $g$ decreases the range since $R\propto 1/g$.
 - Lower gravity environments (e.g., Moon or Mars) allow longer ranges for the same launch velocity.
 
 ### **Effect of Initial Velocity**
@@ -92,7 +92,6 @@ $$R=\frac{v_0^2\sin 2\theta}{g}$$
 ## **Conclusion**
 
 The projectile motion equations provide deep insight into real-world applications, from sports physics to space exploration. The range formula highlights the key dependencies on angle, velocity, and gravity, illustrating the elegance of motion under constant acceleration.
-
 # **Projectile Motion: Theoretical Analysis of Range**
 
 ## **1. Relationship Between Horizontal Range and Angle of Projection**
@@ -191,39 +190,8 @@ The function $R(\theta)$ follows a symmetric pattern, reaching its maximum at $4
 
 From the range equation:
 
-$$R\propto v_0^2$$
-
-- Doubling the initial velocity results in a fourfold increase in range.
-- The relationship between range and velocity is **quadratic**, meaning small increases in velocity can significantly impact the range.
-
-### **Effect of Gravitational Acceleration**
-
-From the range equation:
-
-$$R\propto\frac{1}{g}$$
-
-- An increase in gravitational acceleration reduces the range.
-- On planets with lower gravity (e.g., the Moon, Mars), a projectile launched with the same velocity and angle will travel much farther than on Earth.
-
-## **3. Practical Applications of Range Analysis**
-
-### **Sports Science**
-- In ballistics and sports like basketball, soccer, and golf, understanding range helps optimize shooting angles for maximum distance or accuracy.
-- Athletes adjust their throwing or kicking angles based on desired projectile motion.
-
-### **Engineering and Defense**
-- Artillery and missile trajectory calculations rely on precise range equations to hit targets efficiently.
-- Engineers design launch systems considering variations in $g$ due to altitude or planetary conditions.
-
-### **Space Exploration**
-- Rocket launches consider Earth's gravity and initial velocity to optimize fuel efficiency and trajectory.
-- Space agencies simulate projectile motion under different gravitational conditions for extraterrestrial landings.
-
-## **Conclusion**
-
-The range of a projectile is influenced significantly by the angle of projection, initial velocity, and gravitational acceleration. The mathematical relationships governing projectile motion allow for precise predictions, leading to various applications in sports, engineering, and space exploration.
-
-### Python Implementation
+$$R\propto v_0^
+### Phyton İmplementation
 
 ```python
 import numpy as np
@@ -247,8 +215,8 @@ class ProjectileSimulator:
         # Convert angle to radians
         angle_rad = np.radians(angle_deg)
         # Range formula: R = (v0² * sin(2θ)) / g
-        range_ = (self.v0**2 * np.sin(2 * angle_rad)) / self.g
-        return range_
+        range = (self.v0**2 * np.sin(2 * angle_rad)) / self.g
+        return range
 
     def calculate_trajectory(self, angle_deg, num_points=100):
         """
@@ -320,3 +288,9 @@ if __name__ == "__main__":
     sample_simulator = ProjectileSimulator(v0=20)
     sample_angles = [15, 30, 45, 60, 75]
     plot_trajectory(sample_simulator, sample_angles)
+```
+
+## Table For Range And Angle
+
+![alt text](image.png)
+![alt text](image-1.png)
