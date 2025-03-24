@@ -13,8 +13,8 @@ $$F_y=-mg,\quad F_x=0$$
 
 Thus, the equations of motion can be written as:
 
-$$m a_x=0 \quad \Rightarrow \quad a_x=0$$
-$$m a_y=-mg \quad \Rightarrow \quad a_y=-g$$
+$$m a_x=0 \quad \Rightarrow \quad a_x=0
+m a_y=-mg \quad \Rightarrow \quad a_y=-g$$
 
 Since acceleration is the second derivative of position, we get:
 
@@ -170,15 +170,7 @@ where:
 - $\theta$ is the angle of projection,
 - $g$ is the acceleration due to gravity.
 
-### **Effect of Angle on Range**
 
-- The function $\sin 2\theta$ determines how the range varies with the angle of projection.
-- The range is maximized when $\sin 2\theta=1$, which occurs at $\theta=45^\circ$.
-- The same range can be obtained for complementary angles $\theta$ and $90^\circ-\theta$ because $\sin 2\theta$ has the same value for both.
-
-Thus, for any initial velocity, the two angles that yield the same range are given by:
-
-$$\theta_1+\theta_2=90^\circ$$
 
 ### **Graphical Representation**
 
@@ -190,7 +182,6 @@ The function $R(\theta)$ follows a symmetric pattern, reaching its maximum at $4
 
 From the range equation:
 
-$$R\propto v_0^
 ### Phyton İmplementation
 
 ```python
