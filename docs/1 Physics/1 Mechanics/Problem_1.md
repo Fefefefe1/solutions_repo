@@ -13,8 +13,8 @@ $$F_y=-mg,\quad F_x=0$$
 
 Thus, the equations of motion can be written as:
 
-$$m a_x=0 \quad \Rightarrow \quad a_x=0
-m a_y=-mg \quad \Rightarrow \quad a_y=-g$$
+$$m a_x=0 \quad \Rightarrow \quad a_x=0\quad
+m a_y=-mg \quad \Rightarrow \quad a_y=-g$$ 
 
 Since acceleration is the second derivative of position, we get:
 
@@ -176,108 +176,6 @@ where:
 
 The function $R(\theta)$ follows a symmetric pattern, reaching its maximum at $45^\circ$ and decreasing symmetrically for angles above and below this value.
 
-## **2. Dependence of Range on Initial Velocity and Gravity**
-
-### **Effect of Initial Velocity**
-
-From the range equation:
-R∝v 
-0
-2
-​The range 
-𝑅
-R of a projectile launched from ground level (
-ℎ
-=
-0
-h=0) at an angle 
-𝜃
-θ with initial velocity 
-𝑣
-0
-v 
-0
-​
-  is given by:
-
-𝑅
-=
-𝑣
-0
-2
-sin
-⁡
-(
-2
-𝜃
-)
-𝑔
-R= 
-g
-v 
-0
-2
-​
- sin(2θ)
-​
- 
-where:
-
-𝑅
-R: Range (horizontal distance, in meters),
-𝑣
-0
-v 
-0
-​
- : Initial velocity (in m/s),
-𝜃
-θ: Angle of projection (in radians),
-𝑔
-g: Gravitational acceleration (
-9.8
- 
-m/s
-2
-9.8m/s 
-2
- ).
-To find the proportionality of 
-𝑅
-R with respect to 
-𝑣
-0
-v 
-0
-​
- , we treat 
-𝜃
-θ and 
-𝑔
-g as constants:
-
-sin
-⁡
-(
-2
-𝜃
-)
-sin(2θ) is constant for a fixed 
-𝜃
-θ,
-𝑔
-g is a constant.
-Thus, the equation simplifies to:
-
-𝑅
-∝
-𝑣
-0
-2
-R∝v 
-0
-2
-​
 
 ### Phyton İmplementation
 
