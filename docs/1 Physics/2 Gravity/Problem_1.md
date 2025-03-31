@@ -84,41 +84,26 @@ For a planet like Jupiter, which has an orbital period of about 11.86 years and 
 ### Codes Of Tables
 import pandas as pd
 
-# Table 1: Orbital Period and Radius (Sample Data)
-data1 = {
-    "Planet": ["Earth", "Mars", "Jupiter", "Saturn"],
-    "Orbital Period (years)": [1, 1.88, 11.86, 29.46],
-    "Orbital Radius (AU)": [1, 1.524, 5.203, 9.537]
-}
-table1 = pd.DataFrame(data1)
-print("Table 1: Orbital Period and Radius")
-print(table1)
-
-print("\n")
-
-# Table 2: Orbital Characteristics of Moons (Sample Data)
-data2 = {
-    "Moon": ["Moon", "Phobos", "Europa", "Titan"],
-    "Orbital Period (days)": [27.32, 0.32, 3.55, 15.95],
-    "Orbital Radius (km)": [384400, 9377, 671100, 1221870]
-}
-table2 = pd.DataFrame(data2)
-print("Table 2: Orbital Characteristics of Moons")
-print(table2)
 
 ### Tables
-Table 1: Orbital Period and Radius
-    Planet  Orbital Period (years)  Orbital Radius (AU)
-0    Earth                    1.00                1.000
-1     Mars                    1.88                1.524
-2  Jupiter                   11.86                5.203
-3   Saturn                   29.46                9.537
 
+#### Table 1: Orbital Period and Radius
 
-Table 2: Orbital Characteristics of Moons
-     Moon  Orbital Period (days)  Orbital Radius (km)
-0    Moon                  27.32               384400
-1  Phobos                   0.32                 9377
-2  Europa                   3.55               671100
-3   Titan                  15.95              1221870
-![alt text](image-1.png)
+| Planet  | Orbital Period (years) | Orbital Radius (AU) |
+|---------|------------------------|---------------------|
+| Earth   | 1.00                   | 1.000               |
+| Mars    | 1.88                   | 1.524               |
+| Jupiter | 11.86                  | 5.203               |
+| Saturn  | 29.46                  | 9.537               |
+
+#### Table 2: Orbital Characteristics of Moons
+
+| Moon   | Orbital Period (days) | Orbital Radius (km) |
+|--------|-----------------------|---------------------|
+| Moon   | 27.32                 | 384400              |
+| Phobos | 0.32                  | 9377                |
+| Europa | 3.55                  | 671100              |
+| Titan  | 15.95                 | 1221870             |
+
+![alt text](image-1.png) 
+
