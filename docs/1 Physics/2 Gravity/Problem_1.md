@@ -1,109 +1,129 @@
-# Problem 1
-# Derivation of Kepler's Third Law
+# Orbital Period and Orbital Radius
 
-## Horizontal Motion
+## Motivation
 
-Since velocity is the derivative of position:
+The relationship between the square of the orbital period and the cube of the orbital radius, known as **Kepler's Third Law**, is a cornerstone of celestial mechanics. This simple yet profound relationship allows for the determination of planetary motions and has implications for understanding gravitational interactions on both local and cosmic scales. By analyzing this relationship, one can connect fundamental principles of gravity with real-world phenomena such as satellite orbits and planetary systems.
 
-$$
-\frac{dx}{dt} = v_0 \cos\theta
-$$
+## Task
 
-Integrating again:
+### 1. Derivation of the Relationship for Circular Orbits
 
-$$x(t) = v_0 \cos\theta \cdot t
-$$
+Consider an object of mass \(m\) (e.g., a planet or a satellite) orbiting a much larger object of mass \(M\) (e.g., a star or a planet) in a circular orbit of radius \(r\) with an orbital period \(T\). The gravitational force between the two objects provides the centripetal force required for the circular motion.
 
-### **Vertical Motion**
+According to **Newton's Law of Universal Gravitation**, the gravitational force \(F_g\) is given by:
 
-Integrating the vertical acceleration equation:
+$$F_g = G \frac{Mm}{r^2}$$
 
-$$
-\frac{dv_y}{dt} = -g
-$$
+where \(G\) is the gravitational constant.
 
-The velocity in the vertical direction is:
+The **centripetal force** \(F_c\) required to keep the object of mass \(m\) moving in a circle of radius \(r\) with a speed \(v\) is given by:
 
-$$
-v_y = v_0 \sin\theta - gt
-$$
+$$F_c = \frac{mv^2}{r}$$
 
-Since velocity is the derivative of position:
+For a stable circular orbit, the gravitational force must equal the centripetal force:
 
-$$
-\frac{dy}{dt} = v_0 \sin\theta - gt
-$$
-# Astronomical Implications
+$$G \frac{Mm}{r^2} = \frac{mv^2}{r}$$
 
-## Planetary Masses
+We can cancel the mass of the orbiting object \(m\) from both sides:
 
-Kepler's Third Law can be used to calculate the mass of a planet or a star if we know the orbital period and the orbital radius of a satellite or planet in orbit. Rearranging the derived equation:
+$$G \frac{M}{r^2} = \frac{v^2}{r}$$
 
-$$
-T^2 = \frac{4\pi^2 r^3}{GM}
-$$
+The speed \(v\) of the orbiting object is related to the orbital radius \(r\) and the orbital period \(T\) by the formula:
 
-We can solve for the mass \( M \):
+$$v = \frac{2\pi r}{T}$$
 
-$$
-M = \frac{4\pi^2 r^3}{GT^2}
-$$
+Substituting this expression for \(v\) into the equation above:
 
-This formula allows us to calculate the mass of the central object (like a planet or a star) using the orbital period \( T \) and the orbital radius \( r \) of an orbiting body. For example, if we know the orbital characteristics of a satellite or moon, we can determine the mass of the planet or star it orbits.
+$$G \frac{M}{r^2} = \frac{(2\pi r/T)^2}{r}$$
 
-## Orbital Distances
+Simplify the equation:
 
-Kepler's Third Law also helps us calculate the orbital distance (semi
-# Real-World Analysis
+$$G \frac{M}{r^2} = \frac{4\pi^2 r^2}{T^2 r}$$
+$$G \frac{M}{r^2} = \frac{4\pi^2 r}{T^2}$$
 
-## Moon's Orbit Around Earth
+Now, rearrange the equation to solve for \(T^2\):
 
-Kepler's Third Law allows us to analyze the Moon's orbit around Earth by using the known orbital period and orbital radius. The Moon’s orbital period is approximately 27.32 days, and the average distance from Earth is about 384,400 km.
+$$T^2 = \frac{4\pi^2 r^3}{GM}$$
 
-To calculate the mass of Earth using Kepler's Third Law, we can rearrange the formula:
+This equation shows that the square of the orbital period \(T^2\) is proportional to the cube of the orbital radius \(r^3\), with the constant of proportionality being \(\frac{4\pi^2}{GM}\). This is **Kepler's Third Law** for circular orbits.
 
-$$
-M = \frac{4\pi^2 r^3}{GT^2}
-$$
+### 2. Implications for Astronomy
 
-Where:
-- \( r = 384,400 \, \text{km} \) (orbital radius),
-- \( T = 27.32 \, \text{days} \) (orbital period, which we convert to seconds for consistency).
+Kepler's Third Law has several crucial implications for astronomy:
 
-Using the known gravitational constant \( G \), we can solve for the mass of Earth. This illustrates how Kepler's Third Law can be used to determine the mass of a planet or moon based on orbital parameters.
+1.  **Determining the Mass of a Central Body:**
+    If we know the orbital period \(T\) and the orbital radius \(r\) of an object orbiting a central body, we can calculate the mass \(M\) of the central body using the rearranged formula:
 
-## Orbits of Planets in the Solar System
+    $$M = \frac{4\pi^2 r^3}{GT^2}$$
 
-Kepler’s Third Law is crucial in understanding the motion of planets in the Solar System. By analyzing the orbital periods and radii of planets, we can infer various important properties.
+    This is how the masses of stars, planets, and even black holes can be estimated by observing the orbits of their satellites or companion stars.
 
-For example, the orbital period of Earth is 1 year, and its average orbital radius (semi-major axis) is 1 Astronomical Unit (AU) or 149.6 million km. If we apply Kepler's Third Law, we can calculate the mass of the Sun.
+2.  **Predicting Orbital Periods and Radii:**
+    Conversely, if we know the mass of the central body and either the orbital period or the orbital radius of an orbiting object, we can predict the other quantity. This is essential for planning satellite missions and understanding the dynamics of planetary systems.
 
-For a planet like Jupiter, which has an orbital period of about 11.86 years and an average orbital radius of 5.2 AU, we can use Kepler's Third Law to verify its motion relative to the Sun. By comparing the orbital parameters of all planets, we see that the farther a planet is from the Sun, the longer its orbital period, which is consistent with the relationship \( T^2 \propto r^3 \).
+3.  **Understanding Planetary Systems:**
+    Kepler's Third Law provides a fundamental framework for understanding the structure and evolution of planetary systems. The consistent relationship between orbital periods and radii across different planets in a system supports the idea of a common formation mechanism.
+
+### 3. Real-world Examples
+
+Let's consider two examples: the Moon orbiting the Earth and the Earth orbiting the Sun.
+
+**The Moon Orbiting the Earth:**
+
+* Orbital Period of the Moon (\(T_{\text{Moon}}\)):
+    \(\approx 27.3 \text{ days} \approx 27.3 \times 24 \times 3600 \text{ seconds} \approx 2.36 \times 10^6 \text{ s}\)
+* Average orbital radius of the Moon (\(r_{\text{Moon}}\)):
+    \(\approx 384,400 \text{ km} \approx 3.844 \times 10^8 \text{ m}\)
+* Mass of the Earth (\(M_{\text{Earth}}\)):
+    \(\approx 5.972 \times 10^{24} \text{ kg}\)
+* Gravitational constant (\(G\)):
+    \(\approx 6.674 \times 10^{-11} \text{ N}\cdot\text{m}^2/\text{kg}^2\)
+
+Let's verify Kepler's Third Law using these values. Calculate \(\frac{4\pi^2 r^3_{\text{Moon}}}{GM_{\text{Earth}}}\):
+
+$$\frac{4\pi^2 (3.844 \times 10^8)^3}{(6.674 \times 10^{-11})(5.972 \times 10^{24})} \approx \frac{4 \times (3.14159)^2 \times 5.66 \times 10^{25}}{3.985 \times 10^{14}} \approx 5.62 \times 10^{12} \text{ s}^2$$
+
+Now, let's calculate \(T^2_{\text{Moon}}\):
+
+$$(2.36 \times 10^6)^2 \approx 5.57 \times 10^{12} \text{ s}^2$$
+
+The calculated value from Kepler's Third Law is very close to the square of the Moon's orbital period, confirming the law.
+
+**The Earth Orbiting the Sun:**
+
+* Orbital Period of the Earth (\(T_{\text{Earth}}\)):
+    \(\approx 365.25 \text{ days} \approx 365.25 \times 24 \times 3600 \text{ seconds} \approx 3.156 \times 10^7 \text{ s}\)
+* Average orbital radius of the Earth (\(r_{\text{Earth}}\)):
+    \(\approx 1.496 \times 10^{11} \text{ m}\)
+* Mass of the Sun (\(M_{\text{Sun}}\)):
+    \(\approx 1.989 \times 10^{30} \text{ kg}\)
+
+Calculate \(\frac{4\pi^2 r^3_{\text{Earth}}}{GM_{\text{Sun}}}\):
+
+$$\frac{4\pi^2 (1.496 \times 10^{11})^3}{(6.674 \times 10^{-11})(1.989 \times 10^{30})} \approx \frac{4 \times (3.14159)^2 \times 3.348 \times 10^{33}}{1.327 \times 10^{20}} \approx 1.00 \times 10^{15} \text{ s}^2$$
+
+Now, let's calculate \(T^2_{\text{Earth}}\):
+
+$$(3.156 \times 10^7)^2 \approx 9.96 \times 10^{14} \text{ s}^2$$
+
+Again, the calculated value is very close to the square of the Earth's orbital period, validating Kepler's Third Law.
+
+### 4. Computational Model
+
+We can create a simplified computational model using Python to simulate circular orbits and observe the relationship between orbital period and radius. Below is an example Python script:
+
+This plot demonstrates the linear relationship between the square of the orbital period and the cube of the orbital radius, visually confirming Kepler's Third Law. The slope of the linear fit is proportional to \(1/(GM)\).
+
+The Python code calculates and plots the relationship between the radius and the period, and also plots the square of the period against the cube of the radius to demonstrate the linear relationship predicted by Kepler's Third Law. The linear fit to the \(T^2\) vs \(r^3\) plot will have a slope equal to \(\frac{4\pi^2}{GM}\).
+
+![alt text](image-3.png)
 
 
-### Codes Of Tables
-import pandas as pd
 
+### 5. Extension to Elliptical Orbits
 
-### Tables
+For elliptical orbits, Kepler's Third Law still holds, but the radius \(r\) is replaced by the semi-major axis \(a\) of the ellipse. The semi-major axis is half of the longest diameter of the ellipse and is the average of the perihelion (closest approach) and aphelion (farthest distance) distances. The law can be written as:
 
-#### Table 1: Orbital Period and Radius
+$$T^2 = \frac{4\pi^2 a^3}{GM}$$
 
-| Planet  | Orbital Period (years) | Orbital Radius (AU) |
-|---------|------------------------|---------------------|
-| Earth   | 1.00                   | 1.000               |
-| Mars    | 1.88                   | 1.524               |
-| Jupiter | 11.86                  | 5.203               |
-| Saturn  | 29.46                  | 9.537               |
-
-#### Table 2: Orbital Characteristics of Moons
-
-| Moon   | Orbital Period (days) | Orbital Radius (km) |
-|--------|-----------------------|---------------------|
-| Moon   | 27.32                 | 384400              |
-| Phobos | 0.32                  | 9377                |
-| Europa | 3.55                  | 671100              |
-| Titan  | 15.95                 | 1221870             |
-
-![alt text](image-1.png) 
-
+where \(a\) is the length of the semi-major axis. This extension is crucial for understanding the orbits of planets, comets, and many other celestial bodies that do not follow perfectly circular paths. The derivation for elliptical orbits involves more advanced mathematics and takes into account the varying speed of the orbiting object as it moves along its elliptical path, as described by Kepler's Second Law (the law of equal areas).![alt text](image-2.png)
