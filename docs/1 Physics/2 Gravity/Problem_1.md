@@ -116,6 +116,57 @@ This plot demonstrates the linear relationship between the square of the orbital
 
 The Python code calculates and plots the relationship between the radius and the period, and also plots the square of the period against the cube of the radius to demonstrate the linear relationship predicted by Kepler's Third Law. The linear fit to the \(T^2\) vs \(r^3\) plot will have a slope equal to \(\frac{4\pi^2}{GM}\).
 
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.674 * 10**-11  # Gravitational constant (N·m²/kg²)
+M = 1.989 * 10**30   # Mass of the Sun (kg)
+
+# Function to calculate orbital period
+def orbital_period(r):
+    return np.sqrt((4 * np.pi**2 * r**3) / (G * M))
+
+# Radii for the curve
+radii = np.linspace(1e10, 5e12, 100)  # in meters
+T_squared = (orbital_period(radii))**2
+r_cubed = radii**3
+
+# Planetary data (semi-major axis in meters, orbital period in seconds)
+planets = {
+    "Mercury": (5.79e10, 7.6e6),
+    "Venus":   (1.082e11, 1.94e7),
+    "Earth":   (1.496e11, 3.156e7),
+    "Mars":    (2.279e11, 5.93e7),
+    "Jupiter": (7.785e11, 3.74e8)
+}
+
+# Prepare planet data for plotting
+planet_r_cubed = [r**3 for r, T in planets.values()]
+planet_T_squared = [T**2 for r, T in planets.values()]
+
+# Plot T^2 vs r^3 on a log-log scale
+plt.figure(figsize=(8, 6))
+plt.plot(r_cubed, T_squared, label="T² vs r³ (Kepler's Law)", color='blue')
+plt.scatter(planet_r_cubed, planet_T_squared, color='red', s=50, label="Planets", zorder=5)
+
+# Add planet labels
+for name, (r, T) in planets.items():
+    plt.text(r**3, T**2, name, fontsize=9, ha='right')
+
+plt.xscale('log')
+plt.yscale('log')
+plt.xlabel("r³ (m³)")
+plt.ylabel("T² (s²)")
+plt.title("Kepler's Third Law: T² vs r³")
+plt.grid(True, which='both', ls='--')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+
+
 ![alt text](image-3.png)
 
 
