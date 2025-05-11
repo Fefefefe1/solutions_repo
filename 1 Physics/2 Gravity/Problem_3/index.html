@@ -60,6 +60,20 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 3</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#trajectories-of-a-freely-released-payload-near-earth">Trajectories of a Freely Released Payload Near Earth</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#theoretical-background">Theoretical Background</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#types-of-trajectories">Types of Trajectories</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#numerical-simulation">Numerical Simulation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#simulation-and-plotting">Simulation and Plotting</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +186,200 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-3">Problem 3</h1>
+<h2 id="trajectories-of-a-freely-released-payload-near-earth">Trajectories of a Freely Released Payload Near Earth</h2>
+<h3 id="introduction">Introduction</h3>
+<p>Understanding the motion of objects under the influence of Earth's gravity is fundamental to space exploration. When a payload is released from a moving rocket near Earth, its subsequent trajectory is governed by its initial conditions (position and velocity at the time of release) and the gravitational force exerted by Earth. This problem explores the different types of trajectories possible and provides a computational tool to simulate and visualize these paths.</p>
+<h3 id="theoretical-background">Theoretical Background</h3>
+<p>The motion of the payload is primarily governed by <strong>Newton's Law of Universal Gravitation</strong>, which states that every particle in the universe attracts every other particle with a force that is directly proportional to the product of their masses and inversely proportional to the square of the distance between their centers. Mathematically, the force <span class="arithmatex">\(F\)</span> exerted by Earth (mass <span class="arithmatex">\(M\)</span>) on the payload (mass <span class="arithmatex">\(m\)</span>) is given by:</p>
+<div class="arithmatex">\[F = -G \frac{Mm}{r^2} \hat{r}\]</div>
+<p>where:
+* <span class="arithmatex">\(G\)</span> is the universal gravitational constant (<span class="arithmatex">\(6.674 \times 10^{-11} \text{ N} \cdot \text{m}^2/\text{kg}^2\)</span>),
+* <span class="arithmatex">\(M\)</span> is the mass of Earth (<span class="arithmatex">\(5.972 \times 10^{24} \text{ kg}\)</span>),
+* <span class="arithmatex">\(m\)</span> is the mass of the payload,
+* <span class="arithmatex">\(r\)</span> is the distance between the center of Earth and the payload,
+* <span class="arithmatex">\(\hat{r}\)</span> is the unit vector pointing from the center of Earth to the payload.</p>
+<p>From <strong>Newton's second law of motion</strong> (<span class="arithmatex">\(F = ma\)</span>), the acceleration <span class="arithmatex">\(a\)</span> of the payload is:</p>
+<div class="arithmatex">\[a = \frac{F}{m} = -G \frac{M}{r^2} \hat{r}\]</div>
+<p>This acceleration is always directed towards the center of Earth.</p>
+<h3 id="types-of-trajectories">Types of Trajectories</h3>
+<p>The type of trajectory the payload will follow depends on its <strong>total mechanical energy</strong>, which is the sum of its kinetic energy (<span class="arithmatex">\(K\)</span>) and potential energy (<span class="arithmatex">\(U\)</span>). The gravitational potential energy of the payload at a distance <span class="arithmatex">\(r\)</span> from the center of Earth is:</p>
+<div class="arithmatex">\[U = -G \frac{Mm}{r}\]</div>
+<p>The kinetic energy of the payload with velocity <span class="arithmatex">\(v\)</span> is:</p>
+<div class="arithmatex">\[K = \frac{1}{2}mv^2\]</div>
+<p>The total energy <span class="arithmatex">\(E\)</span> is:</p>
+<div class="arithmatex">\[E = K + U = \frac{1}{2}mv^2 - G \frac{Mm}{r}\]</div>
+<p>The shape of the trajectory is determined by the sign of the total energy:</p>
+<ol>
+<li>
+<p><strong>Elliptical Trajectory (<span class="arithmatex">\(E &lt; 0\)</span>)</strong>:
+    If the total energy is negative, the payload is bound to Earth and will follow an elliptical orbit. A circle is a special case of an ellipse where the eccentricity is zero. This is typical for payloads that are intended to orbit Earth.</p>
+</li>
+<li>
+<p><strong>Parabolic Trajectory (<span class="arithmatex">\(E = 0\)</span>)</strong>:
+    If the total energy is exactly zero, the payload will follow a parabolic trajectory. This is the minimum energy required for the payload to escape Earth's gravitational pull and never return. The velocity at which this occurs at a given distance <span class="arithmatex">\(r\)</span> is the <strong>escape velocity</strong>:
+    <span class="arithmatex">\(<span class="arithmatex">\(v_{\text{esc}} = \sqrt{\frac{2GM}{r}}\)</span>\)</span></p>
+</li>
+<li>
+<p><strong>Hyperbolic Trajectory (<span class="arithmatex">\(E &gt; 0\)</span>)</strong>:
+    If the total energy is positive, the payload has more than enough energy to escape Earth's gravity and will follow a hyperbolic trajectory.</p>
+</li>
+</ol>
+<h3 id="numerical-simulation">Numerical Simulation</h3>
+<p>To simulate the motion of the payload, we can use numerical methods to solve the equations of motion. We will use a simple <strong>Euler method</strong> for this demonstration, but more accurate methods like the <strong>Runge-Kutta method</strong> can be used for higher precision.</p>
+<p>Let <span class="arithmatex">\(\mathbf{r} = (x, y)\)</span> be the position vector of the payload and <span class="arithmatex">\(\mathbf{v} = (v_x, v_y)\)</span> be its velocity vector in a 2D plane (we can extend this to 3D if needed). The acceleration vector <span class="arithmatex">\(\mathbf{a} = (a_x, a_y)\)</span> is given by:</p>
+<div class="arithmatex">\[a_x = -GM \frac{x}{(x^2 + y^2)^{3/2}}$$
+$$a_y = -GM \frac{y}{(x^2 + y^2)^{3/2}}\]</div>
+<p>The Euler method updates the position and velocity at each time step <span class="arithmatex">\(\Delta t\)</span> as follows:</p>
+<div class="arithmatex">\[\mathbf{v}_{i+1} = \mathbf{v}_i + \mathbf{a}_i \Delta t$$
+$$\mathbf{r}_{i+1} = \mathbf{r}_i + \mathbf{v}_i \Delta t\]</div>
+<p>The code has been extended to simulate the trajectories of a payload released from an altitude of 800 km above Earth's surface. We are now investigating multiple launch velocities ranging from 5 km/s to 13 km/s (with 0.5 km/s increments). Each trajectory is computed using the Euler method to numerically solve the equations of motion under Earth's gravitational force.</p>
+<h3 id="simulation-and-plotting">Simulation and Plotting</h3>
+<p>We simulate the trajectories for various initial velocities, starting each payload at a position 800 km above Earth, placed on the right side of Earth (positive x-axis). The velocities tested include:</p>
+<ul>
+<li>5.0 km/s</li>
+<li>5.5 km/s</li>
+<li>6.0 km/s</li>
+<li>...</li>
+<li>13.0 km/s</li>
+</ul>
+<p>Each velocity represents a different scenario for the payload's trajectory, which could be elliptical (orbit), escape, or reentry based on the initial conditions.</p>
+<p>The Earth is drawn to scale in the plot as a blue circle, and the trajectories are displayed accordingly.</p>
+<ol>
+<li><strong>Re-entry Trajectories</strong>: For velocities below the orbital velocity of Earth at this altitude.</li>
+<li><strong>Elliptical Trajectories</strong>: For velocities near the orbital velocity of Earth at this altitude.</li>
+<li><strong>Escape Trajectories</strong>: For velocities greater than the escape velocity of Earth at the given altitude.</li>
+</ol>
+<p>The simulation also now visually shows the Earth in the plot for context.</p>
+<p>import numpy as np
+import matplotlib.pyplot as plt</p>
+<h1 id="constants">Constants</h1>
+<p>G = 6.674e-11       # Gravitational constant (m^3 kg^-1 s^-2)
+M_earth = 5.972e24  # Earth mass (kg)
+R_earth = 6371e3    # Earth radius (m)</p>
+<h1 id="initial-conditions">Initial conditions</h1>
+<p>altitude = 800e3
+initial_distance = R_earth + altitude
+initial_position = [initial_distance, 0]  # on the right side</p>
+<h1 id="velocity-range-in-ms">Velocity range (in m/s)</h1>
+<p>velocities_kms = np.arange(5.0, 13.5, 0.5)
+velocities = velocities_kms * 1e3</p>
+<h1 id="time-parameters">Time parameters</h1>
+<p>dt = 1  # time step (s)
+time_steps = 20000</p>
+<h1 id="containers-for-categorized-results">Containers for categorized results</h1>
+<p>crashes = []
+orbits = []
+escapes = []</p>
+<p>def simulate_trajectory(position, velocity, steps, dt):
+    pos = np.array(position, dtype=float)
+    vel = np.array(velocity, dtype=float)
+    traj = [pos.copy()]</p>
+<pre><code>for _ in range(steps):
+    r = np.linalg.norm(pos)
+    if r &lt;= R_earth:
+        return np.array(traj), "crash"
+    if r &gt; 10 * initial_distance:
+        return np.array(traj), "escape"
+
+    acc = -G * M_earth * pos / r**3
+    vel += acc * dt
+    pos += vel * dt
+    traj.append(pos.copy())
+
+return np.array(traj), "orbit"
+</code></pre>
+<h1 id="simulate-all-velocities">Simulate all velocities</h1>
+<p>for v in velocities:
+    v0 = [0, v]
+    traj, kind = simulate_trajectory(initial_position, v0, time_steps, dt)
+    if kind == "crash":
+        crashes.append((v, traj))
+    elif kind == "orbit":
+        orbits.append((v, traj))
+    elif kind == "escape":
+        escapes.append((v, traj))</p>
+<h1 id="-plot-crash-cases-zoomed-in-">--- Plot Crash Cases (Zoomed In) ---</h1>
+<p>plt.figure(figsize=(8, 8))
+for v, traj in crashes:
+    plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
+plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
+plt.scatter(0, 0, color='blue')
+plt.title("Trajectories that Crash into Earth")
+plt.xlabel("X (m)")
+plt.ylabel("Y (m)")
+plt.axis('equal')
+plt.xlim(-1e7, 1.5e7)
+plt.ylim(-1e7, 1.5e7)
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()</p>
+<h1 id="-plot-orbital-cases-zoomed-out-">--- Plot Orbital Cases (Zoomed Out) ---</h1>
+<p>plt.figure(figsize=(8, 8))
+for v, traj in orbits:
+    plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
+plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
+plt.scatter(0, 0, color='blue')
+plt.title("Orbital Trajectories")
+plt.xlabel("X (m)")
+plt.ylabel("Y (m)")
+plt.axis('equal')
+plt.xlim(-5e7, 5e7)
+plt.ylim(-5e7, 5e7)
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()</p>
+<h1 id="-plot-escape-cases-zoomed-out-more-">--- Plot Escape Cases (Zoomed Out More) ---</h1>
+<p>plt.figure(figsize=(8, 8))
+for v, traj in escapes:
+    plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
+plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
+plt.scatter(0, 0, color='blue')
+plt.title("Trajectories that Escape Earth")
+plt.xlabel("X (m)")
+plt.ylabel("Y (m)")
+plt.axis('equal')
+plt.xlim(-8e7, 1e8)
+plt.ylim(-8e7, 1e8)
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()</p>
+<p><img alt="alt text" src="../image-6.png"/></p>
+<p><img alt="alt text" src="../image-7.png"/></p>
+<p><img alt="alt text" src="../image-8.png"/></p>
+<h3 id="analysis-and-discussion">Analysis and Discussion</h3>
+<p>The simulation demonstrates different types of trajectories based on the initial velocity of the payload.</p>
+<p><strong>Reentry:</strong>
+A reentry trajectory is one where the payload is directed back towards Earth's atmosphere. This occurs when the payload's velocity is lower than the orbital velocity at its altitude, causing it to lose altitude over time due to gravity. The "Crash into Earth" case illustrates this, where the payload's elliptical orbit intersects with Earth.</p>
+<p><strong>Orbital Insertion:</strong>
+For a payload to be inserted into a stable orbit around Earth, its initial velocity at a certain altitude must be carefully chosen. The velocity should be high enough to counteract gravity and prevent the payload from falling back to Earth, but not so high that it escapes Earth's gravitational pull. The simulation with "Orbital trajectories" shows an elliptical trajectory, which, with fine-tuning of the initial velocity, could become a circular orbit. Orbital insertion typically involves achieving a specific velocity vector at a desired altitude.</p>
+<p><strong>Escape:</strong>
+An escape trajectory is achieved when the payload's initial velocity is equal to or greater than the escape velocity at its initial position. In this case, the payload will have enough kinetic energy to overcome Earth's gravitational potential energy and move away from Earth indefinitely (following a parabolic or hyperbolic path). The "Escape Earth" simulation shows the payload moving away from Earth.</p>
+<h3 id="further-considerations-and-improvements">Further Considerations and Improvements</h3>
+<ol>
+<li>
+<p><strong>More Accurate Numerical Methods:</strong>
+    The Euler method is simple but can be inaccurate for long simulations or large time steps. Using methods like the Runge-Kutta 4th order method would provide more accurate results.</p>
+</li>
+<li>
+<p><strong>3D Simulation:</strong>
+    For more realistic scenarios, the simulation should be extended to three dimensions.</p>
+</li>
+<li>
+<p><strong>Atmospheric Drag:</strong>
+    In the lower altitudes, atmospheric drag plays a significant role in the trajectory of a payload, causing it to slow down and eventually burn up or land. This effect is not included in the current simulation.</p>
+</li>
+<li>
+<p><strong>Perturbations:</strong>
+    The gravitational forces of other celestial bodies (like the Moon and the Sun) can also affect the payload's trajectory over long periods. These perturbations are not considered here.</p>
+</li>
+<li>
+<p><strong>Visualization:</strong>
+    More sophisticated visualization tools can be used to create animations of the payload's motion.</p>
+</li>
+</ol>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
