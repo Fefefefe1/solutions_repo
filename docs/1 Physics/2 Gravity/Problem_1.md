@@ -126,4 +126,4 @@ For elliptical orbits, Kepler's Third Law still holds, but the radius \(r\) is r
 
 $$T^2 = \frac{4\pi^2 a^3}{GM}$$
 
-where \(a\) is the length of the semi-major axis. This extension is crucial for understanding the orbits of planets, comets, and many other celestial bodies that do not follow perfectly circular paths. The derivation for elliptical orbits involves more advanced mathematics and takes into account the varying speed of the orbiting object as it moves along its elliptical path, as described by Kepler's Second Law (the law of equal areas).![alt text](image-2.png)
+where \(a\) is the length of the semi-major axis. This extension is crucial for understanding the orbits of planets, comets, and many other celestial bodies that do not follow perfectly circular paths. The derivation for elliptical orbits involves more advanced mathematics and takes into account the varying speed of the orbiting object as it moves along its elliptical path, as described by Kepler's Second Law (the law of equal areas).
