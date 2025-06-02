@@ -72,6 +72,10 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#simulation-and-plotting">Simulation and Plotting</a>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis-and-discussion">Analysis and Discussion</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#further-considerations-and-improvements">Further Considerations and Improvements</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -250,46 +254,53 @@ $$\mathbf{r}_{i+1} = \mathbf{r}_i + \mathbf{v}_i \Delta t\]</div>
 <li><strong>Escape Trajectories</strong>: For velocities greater than the escape velocity of Earth at the given altitude.</li>
 </ol>
 <p>The simulation also now visually shows the Earth in the plot for context.</p>
-<p>import numpy as np
-import matplotlib.pyplot as plt</p>
-<h1 id="constants">Constants</h1>
-<p>G = 6.674e-11       # Gravitational constant (m^3 kg^-1 s^-2)
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.674e-11       # Gravitational constant (m^3 kg^-1 s^-2)
 M_earth = 5.972e24  # Earth mass (kg)
-R_earth = 6371e3    # Earth radius (m)</p>
-<h1 id="initial-conditions">Initial conditions</h1>
-<p>altitude = 800e3
+R_earth = 6371e3    # Earth radius (m)
+
+# Initial conditions
+altitude = 800e3
 initial_distance = R_earth + altitude
-initial_position = [initial_distance, 0]  # on the right side</p>
-<h1 id="velocity-range-in-ms">Velocity range (in m/s)</h1>
-<p>velocities_kms = np.arange(5.0, 13.5, 0.5)
-velocities = velocities_kms * 1e3</p>
-<h1 id="time-parameters">Time parameters</h1>
-<p>dt = 1  # time step (s)
-time_steps = 20000</p>
-<h1 id="containers-for-categorized-results">Containers for categorized results</h1>
-<p>crashes = []
+initial_position = [initial_distance, 0]  # on the right side
+
+# Velocity range (in m/s)
+velocities_kms = np.arange(5.0, 13.5, 0.5)
+velocities = velocities_kms * 1e3
+
+# Time parameters
+dt = 1  # time step (s)
+time_steps = 20000
+
+# Containers for categorized results
+crashes = []
 orbits = []
-escapes = []</p>
-<p>def simulate_trajectory(position, velocity, steps, dt):
+escapes = []
+
+def simulate_trajectory(position, velocity, steps, dt):
     pos = np.array(position, dtype=float)
     vel = np.array(velocity, dtype=float)
-    traj = [pos.copy()]</p>
-<pre><code>for _ in range(steps):
-    r = np.linalg.norm(pos)
-    if r &lt;= R_earth:
-        return np.array(traj), "crash"
-    if r &gt; 10 * initial_distance:
-        return np.array(traj), "escape"
+    traj = [pos.copy()]
 
-    acc = -G * M_earth * pos / r**3
-    vel += acc * dt
-    pos += vel * dt
-    traj.append(pos.copy())
+    for _ in range(steps):
+        r = np.linalg.norm(pos)
+        if r &lt;= R_earth:
+            return np.array(traj), "crash"
+        if r &gt; 10 * initial_distance:
+            return np.array(traj), "escape"
 
-return np.array(traj), "orbit"
-</code></pre>
-<h1 id="simulate-all-velocities">Simulate all velocities</h1>
-<p>for v in velocities:
+        acc = -G * M_earth * pos / r**3
+        vel += acc * dt
+        pos += vel * dt
+        traj.append(pos.copy())
+
+    return np.array(traj), "orbit"
+
+# Simulate all velocities
+for v in velocities:
     v0 = [0, v]
     traj, kind = simulate_trajectory(initial_position, v0, time_steps, dt)
     if kind == "crash":
@@ -297,9 +308,10 @@ return np.array(traj), "orbit"
     elif kind == "orbit":
         orbits.append((v, traj))
     elif kind == "escape":
-        escapes.append((v, traj))</p>
-<h1 id="-plot-crash-cases-zoomed-in-">--- Plot Crash Cases (Zoomed In) ---</h1>
-<p>plt.figure(figsize=(8, 8))
+        escapes.append((v, traj))
+
+# --- Plot Crash Cases (Zoomed In) ---
+plt.figure(figsize=(8, 8))
 for v, traj in crashes:
     plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
 plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
@@ -313,9 +325,10 @@ plt.ylim(-1e7, 1.5e7)
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
-plt.show()</p>
-<h1 id="-plot-orbital-cases-zoomed-out-">--- Plot Orbital Cases (Zoomed Out) ---</h1>
-<p>plt.figure(figsize=(8, 8))
+plt.show()
+
+# --- Plot Orbital Cases (Zoomed Out) ---
+plt.figure(figsize=(8, 8))
 for v, traj in orbits:
     plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
 plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
@@ -329,9 +342,10 @@ plt.ylim(-5e7, 5e7)
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
-plt.show()</p>
-<h1 id="-plot-escape-cases-zoomed-out-more-">--- Plot Escape Cases (Zoomed Out More) ---</h1>
-<p>plt.figure(figsize=(8, 8))
+plt.show()
+
+# --- Plot Escape Cases (Zoomed Out More) ---
+plt.figure(figsize=(8, 8))
 for v, traj in escapes:
     plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
 plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
@@ -345,7 +359,8 @@ plt.ylim(-8e7, 1e8)
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
-plt.show()</p>
+plt.show()
+</code></pre>
 <p><img alt="alt text" src="../image-6.png"/></p>
 <p><img alt="alt text" src="../image-7.png"/></p>
 <p><img alt="alt text" src="../image-8.png"/></p>
