@@ -88,6 +88,7 @@ $$\Delta v = v_{\text{SolarEscape}} - v_{\text{EarthOrbital}}$$
 
 ### Phyton İmplemation 
 
+```python
 import math
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -151,6 +152,7 @@ plt.legend()
 plt.grid(True)
 plt.tight_layout()
 plt.show()
+```
 
 ### 📊 Results (Velocities in km/s)
 
