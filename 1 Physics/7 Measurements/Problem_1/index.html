@@ -355,30 +355,38 @@ g = \frac{4 \pi^2 L}{T^2}
 <li>Measured value: 9.55 ± 0.18 m/s²</li>
 </ul>
 <h3 id="phyton">Phyton</h3>
-<p>import numpy as np
-import matplotlib.pyplot as plt</p>
-<h1 id="simulated-10-measurements-of-time-for-10-oscillations-seconds">Simulated 10 measurements of time for 10 oscillations (seconds)</h1>
-<p>T10_measurements = np.array([20.4, 20.2, 20.5, 20.3, 20.4, 20.2, 20.3, 20.4, 20.1, 20.3])</p>
-<h1 id="pendulum-length-meters">Pendulum length (meters)</h1>
-<p>L = 1.000
-delta_L = 0.005  # uncertainty in length (m)</p>
-<h1 id="mean-and-standard-deviation">Mean and standard deviation</h1>
-<p>T10_mean = np.mean(T10_measurements)
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Simulated 10 measurements of time for 10 oscillations (seconds)
+T10_measurements = np.array([20.4, 20.2, 20.5, 20.3, 20.4, 20.2, 20.3, 20.4, 20.1, 20.3])
+
+# Pendulum length (meters)
+L = 1.000
+delta_L = 0.005  # uncertainty in length (m)
+
+# Mean and standard deviation
+T10_mean = np.mean(T10_measurements)
 T10_std = np.std(T10_measurements, ddof=1)  # sample std deviation
-delta_T10 = T10_std / np.sqrt(len(T10_measurements))</p>
-<h1 id="period-and-uncertainty">Period and uncertainty</h1>
-<p>T = T10_mean / 10
-delta_T = delta_T10 / 10</p>
-<h1 id="gravitational-acceleration">Gravitational acceleration</h1>
-<p>g = (4 * np.pi<strong>2 * L) / T</strong>2</p>
-<h1 id="uncertainty-in-g">Uncertainty in g</h1>
-<p>delta_g = g * np.sqrt((delta_L / L)<strong>2 + (2 * delta_T / T)</strong>2)</p>
-<h1 id="print-results">Print results</h1>
-<p>print(f"Mean time for 10 oscillations (T10): {T10_mean:.3f} ± {delta_T10:.3f} s")
+delta_T10 = T10_std / np.sqrt(len(T10_measurements))
+
+# Period and uncertainty
+T = T10_mean / 10
+delta_T = delta_T10 / 10
+
+# Gravitational acceleration
+g = (4 * np.pi**2 * L) / T**2
+
+# Uncertainty in g
+delta_g = g * np.sqrt((delta_L / L)**2 + (2 * delta_T / T)**2)
+
+# Print results
+print(f"Mean time for 10 oscillations (T10): {T10_mean:.3f} ± {delta_T10:.3f} s")
 print(f"Period (T): {T:.3f} ± {delta_T:.3f} s")
-print(f"Calculated g: {g:.3f} ± {delta_g:.3f} m/s²")</p>
-<h1 id="-plot-1-t10-measurements-with-mean-line-">--- Plot 1: T10 measurements with mean line ---</h1>
-<p>plt.figure(figsize=(8, 4))
+print(f"Calculated g: {g:.3f} ± {delta_g:.3f} m/s²")
+
+# --- Plot 1: T10 measurements with mean line ---
+plt.figure(figsize=(8, 4))
 plt.plot(T10_measurements, 'o-', label='Measurements')
 plt.axhline(y=T10_mean, color='red', linestyle='--', label=f'Mean = {T10_mean:.2f}s')
 plt.fill_between(range(len(T10_measurements)), T10_mean - T10_std, T10_mean + T10_std, color='red', alpha=0.1, label='±1σ')
@@ -388,9 +396,10 @@ plt.ylabel("Time (s)")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.show()</p>
-<h1 id="-plot-2-convergence-of-g-estimation-">--- Plot 2: Convergence of g estimation ---</h1>
-<p>g_estimates = (4 * np.pi<strong>2 * L) / (T10_measurements / 10)</strong>2
+plt.show()
+
+# --- Plot 2: Convergence of g estimation ---
+g_estimates = (4 * np.pi**2 * L) / (T10_measurements / 10)**2
 plt.figure(figsize=(8, 4))
 plt.plot(g_estimates, 'o-', label='g estimates per trial')
 plt.axhline(y=g, color='green', linestyle='--', label=f'Average g = {g:.2f} m/s²')
@@ -401,7 +410,8 @@ plt.ylabel("g (m/s²)")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.show()</p>
+plt.show()
+</code></pre>
 <p><img alt="alt text" src="../image.png"/></p>
 <p><img alt="alt text" src="../image-1.png"/></p>
 </div>
