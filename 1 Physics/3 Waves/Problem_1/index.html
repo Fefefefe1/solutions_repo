@@ -205,68 +205,83 @@
 \]</div>
 <h2 id="python-simulation-code">Python Simulation Code</h2>
 <p>To simulate and visualize the interference patterns for various point source configurations, use the following Python code.</p>
-<p>import numpy as np
+<pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 import os
 import matplotlib.ticker
-from matplotlib.colors import LinearSegmentedColormap</p>
-<h1 id="-wave-parameters-">--- Wave Parameters ---</h1>
-<p>A = 1  # Amplitude
+from matplotlib.colors import LinearSegmentedColormap
+
+# --- Wave Parameters ---
+A = 1  # Amplitude
 wavelength = 2
 frequency = 1
 k = 2 * np.pi / wavelength
 omega = 2 * np.pi * frequency
-phi = 0  # Phase</p>
-<h1 id="-coordinate-grid-">--- Coordinate Grid ---</h1>
-<p>x = np.linspace(-10, 10, 300)
+phi = 0  # Phase
+
+# --- Coordinate Grid ---
+x = np.linspace(-10, 10, 300)
 y = np.linspace(-10, 10, 300)
-X, Y = np.meshgrid(x, y)</p>
-<h1 id="-polygon-vertex-generator-">--- Polygon Vertex Generator ---</h1>
-<p>def polygon_vertices(n_sides, radius=4):
+X, Y = np.meshgrid(x, y)
+
+# --- Polygon Vertex Generator ---
+def polygon_vertices(n_sides, radius=4):
   return [
       (radius * np.cos(2 * np.pi * i / n_sides),
        radius * np.sin(2 * np.pi * i / n_sides)) for i in range(n_sides)
-  ]</p>
-<h1 id="-wave-from-a-single-source-">--- Wave from a Single Source ---</h1>
-<p>def wave_source(x0, y0, t):
-  R = np.sqrt((X - x0)<strong>2 + (Y - y0)</strong>2)
+  ]
+
+# --- Wave from a Single Source ---
+def wave_source(x0, y0, t):
+  R = np.sqrt((X - x0)**2 + (Y - y0)**2)
   R[R == 0] = 1e-6  # avoid division by zero
-  return (A / R) * np.cos(k * R - omega * t + phi)</p>
-<h1 id="-superposition-of-waves-">--- Superposition of Waves ---</h1>
-<p>def superpose_sources(positions, t=0):
+  return (A / R) * np.cos(k * R - omega * t + phi)
+
+# --- Superposition of Waves ---
+def superpose_sources(positions, t=0):
   Z = np.zeros_like(X)
   for (x0, y0) in positions:
     Z += wave_source(x0, y0, t)
-  return Z</p>
-<h1 id="-3d-plotting-helper-">--- 3D Plotting Helper ---</h1>
-<p>def plot_3d(Z, title, filename):
+  return Z
+
+# --- 3D Plotting Helper ---
+def plot_3d(Z, title, filename):
   fig = plt.figure(figsize=(8, 6))
-  ax = fig.add_subplot(111, projection='3d')</p>
-<p># Define custom colormap with smooth transitions
+  ax = fig.add_subplot(111, projection='3d')
+
+  # Define custom colormap with smooth transitions
   colors = ['yellow', 'green', 'blue', 'purple', 'red']
-  cmap = LinearSegmentedColormap.from_list('custom_div', colors)</p>
-<p># Plot the surface with the custom colormap
-  surf = ax.plot_surface(X, Y, Z, cmap=cmap, edgecolor='none')</p>
-<p>ax.set_title(title)
+  cmap = LinearSegmentedColormap.from_list('custom_div', colors)
+
+  # Plot the surface with the custom colormap
+  surf = ax.plot_surface(X, Y, Z, cmap=cmap, edgecolor='none')
+
+  ax.set_title(title)
   ax.set_xlabel('x')
   ax.set_ylabel('y')
-  ax.set_zlabel('Displacement')</p>
-<p># Ensure symmetric Z-axis limits to clearly show negative displacement
+  ax.set_zlabel('Displacement')
+
+  # Ensure symmetric Z-axis limits to clearly show negative displacement
   z_max = np.max(np.abs(Z))
-  ax.set_zlim(-z_max, z_max)</p>
-<p># Set more frequent Z-axis ticks for precise information
-  ax.zaxis.set_major_locator(matplotlib.ticker.MaxNLocator(nbins=10))</p>
-<p># Adjust viewing angle for better visualization of troughs
-  ax.view_init(elev=30, azim=-45)</p>
-<p># Add a color bar to the side of the plot
-  fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10, label='Displacement')</p>
-<p>plt.tight_layout()
+  ax.set_zlim(-z_max, z_max)
+
+  # Set more frequent Z-axis ticks for precise information
+  ax.zaxis.set_major_locator(matplotlib.ticker.MaxNLocator(nbins=10))
+
+  # Adjust viewing angle for better visualization of troughs
+  ax.view_init(elev=30, azim=-45)
+
+  # Add a color bar to the side of the plot
+  fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10, label='Displacement')
+
+  plt.tight_layout()
   plt.savefig(filename)
-  plt.show()</p>
-<h1 id="-static-visualizations-now-in-3d-">--- Static Visualizations (Now in 3D) ---</h1>
-<p>plot_3d(superpose_sources([(0, 0)], t=0), "One Source", "one_source_3d.png")
+  plt.show()
+
+# --- Static Visualizations (Now in 3D) ---
+plot_3d(superpose_sources([(0, 0)], t=0), "One Source", "one_source_3d.png")
 plot_3d(superpose_sources([(-3, 0), (3, 0)], t=0), "Two Sources", "two_sources_3d.png")
 plot_3d(
     superpose_sources(polygon_vertices(3)),
@@ -277,9 +292,10 @@ plot_3d(
     superpose_sources(polygon_vertices(5)),
     "Five Sources (Pentagon)",
     "pentagon_3d.png",
-)</p>
-<h1 id="-optional-animated-gif-of-pentagon-interference-unchanged-difficult-to-map-colors-directly-to-values-in-a-heatmap-">--- Optional: Animated GIF of Pentagon Interference (unchanged - difficult to map colors directly to values in a heatmap) ---</h1>
-<p>def generate_gif(positions, filename="interference_pentagon.gif", frames=60):
+)
+
+# --- Optional: Animated GIF of Pentagon Interference (unchanged - difficult to map colors directly to values in a heatmap) ---
+def generate_gif(positions, filename="interference_pentagon.gif", frames=60):
   fig, ax = plt.subplots(figsize=(6, 5))
   im = ax.imshow(
       superpose_sources(positions, t=0),
@@ -289,17 +305,22 @@ plot_3d(
   )
   ax.set_title("Wave Interference Animation")
   ax.set_xlabel('x')
-  ax.set_ylabel('y')</p>
-<p># Adding a colorbar for the 2D heatmap as well
-  plt.colorbar(im, label='Displacement')</p>
-<p>def update(frame):
+  ax.set_ylabel('y')
+
+  # Adding a colorbar for the 2D heatmap as well
+  plt.colorbar(im, label='Displacement')
+
+  def update(frame):
     Z = superpose_sources(positions, t=frame * 0.2)
     im.set_array(Z)
-    return [im]</p>
-<p>ani = FuncAnimation(fig, update, frames=frames, interval=80, blit=True)
+    return [im]
+
+  ani = FuncAnimation(fig, update, frames=frames, interval=80, blit=True)
   ani.save(filename, writer='pillow')
-  plt.close()</p>
-<p>generate_gif(polygon_vertices(5))  # Generates 'interference_pentagon.gif'</p>
+  plt.close()
+
+generate_gif(polygon_vertices(5))  # Generates 'interference_pentagon.gif'
+</code></pre>
 <p><img alt="alt text" src="../image.png"/></p>
 <p><img alt="alt text" src="../image-1.png"/></p>
 </div>
