@@ -36,6 +36,7 @@ When multiple sources emit waves, we use the principle of superposition:
 
 To simulate and visualize the interference patterns for various point source configurations, use the following Python code.
 
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -151,6 +152,7 @@ def generate_gif(positions, filename="interference_pentagon.gif", frames=60):
   plt.close()
 
 generate_gif(polygon_vertices(5))  # Generates 'interference_pentagon.gif'
+```
 
 ![alt text](image.png)
 
