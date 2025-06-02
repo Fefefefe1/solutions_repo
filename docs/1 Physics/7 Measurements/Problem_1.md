@@ -113,6 +113,7 @@ g = \frac{4 \pi^2 L}{T^2}
 
 ### Phyton
 
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -169,6 +170,7 @@ plt.legend()
 plt.grid(True)
 plt.tight_layout()
 plt.show()
+```
 
 ![alt text](image.png)
 
