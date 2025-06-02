@@ -50,6 +50,8 @@ The probability \(P\) that the needle crosses a line is related to π by:
 This method uses randomness and geometry to estimate π through repeated trials.
 
 ### PHyton İmplementation
+
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -109,6 +111,7 @@ if __name__ == "__main__":
 
     print("\nRunning Convergence Analysis:")
     convergence_analysis()
+```
 
    ![alt text](image-2.png)
 
