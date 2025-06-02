@@ -86,6 +86,26 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#estimating-using-monte-carlo-methods">Estimating π Using Monte Carlo Methods</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#method-1-monte-carlo-estimation-with-random-points">Method 1: Monte Carlo Estimation with Random Points</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#concept">Concept</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#method-2-buffons-needle-experiment">Method 2: Buffon's Needle Experiment</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#concept_1">Concept</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#phyton-implementation">PHyton İmplementation</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +192,95 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<h2 id="estimating-using-monte-carlo-methods">Estimating π Using Monte Carlo Methods</h2>
+<h3 id="introduction">Introduction</h3>
+<p>Monte Carlo simulations are a class of computational algorithms that rely on repeated random sampling to obtain numerical results. One elegant and accessible application is estimating the value of π through probability and geometry.</p>
+<p>This project explores two Monte Carlo techniques for estimating π:</p>
+<ul>
+<li>Using random points inside a square and circle</li>
+<li>Using Buffon's Needle experiment</li>
+</ul>
+<p>These simulations provide visual insight into the relationship between randomness and mathematical constants.</p>
+<hr/>
+<h2 id="method-1-monte-carlo-estimation-with-random-points">Method 1: Monte Carlo Estimation with Random Points</h2>
+<h3 id="concept">Concept</h3>
+<p>Imagine a square with a circle inscribed inside it. If you randomly generate points in the square, the proportion of points that fall inside the circle is related to π.</p>
+<p>Let:
+- The square be of size 2×2 (centered at the origin)
+- The circle have a radius of 1</p>
+<p>Then the area ratio is:</p>
+<div class="arithmatex">\[
+\pi \approx 4 \times \left(\frac{\text{points inside circle}}{\text{total points}}\right)
+\]</div>
+<p>As the number of points increases, this ratio converges to π.</p>
+<hr/>
+<h2 id="method-2-buffons-needle-experiment">Method 2: Buffon's Needle Experiment</h2>
+<h3 id="concept_1">Concept</h3>
+<p>Buffon's Needle is a classic probability problem where a needle of length <span class="arithmatex">\(L\)</span> is dropped on a floor with parallel lines spaced <span class="arithmatex">\(D\)</span> units apart.</p>
+<p>The probability <span class="arithmatex">\(P\)</span> that the needle crosses a line is related to π by:</p>
+<div class="arithmatex">\[
+\pi \approx \frac{(2 \times L \times \text{number of throws})}{(D \times \text{number of crossings})}
+\]</div>
+<p>This method uses randomness and geometry to estimate π through repeated trials.</p>
+<h3 id="phyton-implementation">PHyton İmplementation</h3>
+<p>import numpy as np
+import matplotlib.pyplot as plt</p>
+<p>def estimate_pi_circle(n_points=10000, visualize=True):
+    x = np.random.uniform(-1, 1, n_points)
+    y = np.random.uniform(-1, 1, n_points)
+    inside = x<strong>2 + y</strong>2 &lt;= 1
+    pi_estimate = 4 * np.sum(inside) / n_points</p>
+<pre><code>if visualize:
+    plt.figure(figsize=(6, 6))
+    plt.scatter(x[inside], y[inside], s=1, color='green', label='Inside Circle')
+    plt.scatter(x[~inside], y[~inside], s=1, color='red', label='Outside Circle')
+    circle = plt.Circle((0, 0), 1, color='black', fill=False)
+    plt.gca().add_artist(circle)
+    plt.title(f'π Estimate (Circle Method): {pi_estimate:.5f} (n={n_points})')
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.axis('equal')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+return pi_estimate
+</code></pre>
+<p>def convergence_analysis():
+    trials = [10, 100, 1000, 5000, 10000, 50000, 100000]
+    estimates_circle = [estimate_pi_circle(n, visualize=False) for n in trials]
+    estimates_buffon = [estimate_pi_buffon(n, visualize=False) for n in trials]</p>
+<pre><code>plt.figure(figsize=(10, 5))
+plt.plot(trials, estimates_circle, label="Circle Method", marker='o')
+plt.plot(trials, estimates_buffon, label="Buffon's Needle", marker='s')
+plt.axhline(np.pi, color='gray', linestyle='--', label='True π')
+
+for x, y in zip(trials, estimates_circle):
+    plt.text(x, y + 0.05, f"{y:.4f}", fontsize=8, ha='center', color='green')
+for x, y in zip(trials, estimates_buffon):
+    plt.text(x, y - 0.1, f"{y:.4f}", fontsize=8, ha='center', color='blue')
+
+plt.xscale("log")
+plt.xlabel("Number of Simulations (log scale)")
+plt.ylabel("Estimated π")
+plt.title("Convergence of π Estimation Methods")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+</code></pre>
+<p>if <strong>name</strong> == "<strong>main</strong>":
+    print("Estimating π using Circle Method:")
+    pi_circle = estimate_pi_circle(10000)</p>
+<pre><code>print("\nEstimating π using Buffon's Needle Method:")
+pi_buffon = estimate_pi_buffon(100000)
+
+print("\nRunning Convergence Analysis:")
+convergence_analysis()
+</code></pre>
+<p><img alt="alt text" src="../image-2.png"/></p>
+<p><img alt="alt text" src="../image-3.png"/></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
