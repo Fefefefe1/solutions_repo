@@ -92,6 +92,44 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#measuring-earths-gravitational-acceleration-with-a-pendulum">Measuring Earth's Gravitational Acceleration with a Pendulum</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#motivation">Motivation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#objective">Objective</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#materials">Materials</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#procedure">Procedure</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#1-setup">1. Setup</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-data-table">Sample Data Table</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#calculations">Calculations</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#1-period-of-one-oscillation">1. Period of One Oscillation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#2-gravitational-acceleration">2. Gravitational Acceleration</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#3-uncertainty-in-g">3. Uncertainty in \(g\)</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#results-summary">Results Summary</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis">Analysis</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#comparison">Comparison</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#phyton">Phyton</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +210,200 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h2 id="measuring-earths-gravitational-acceleration-with-a-pendulum">Measuring Earth's Gravitational Acceleration with a Pendulum</h2>
+<h3 id="motivation">Motivation</h3>
+<p>The acceleration due to gravity, <span class="arithmatex">\(g\)</span>, is a fundamental constant in physics. Measuring <span class="arithmatex">\(g\)</span> accurately is crucial in fields ranging from structural engineering to planetary science. A classic and accessible method involves timing the oscillations of a simple pendulum, relying on the well-understood relationship between the pendulum's period and local gravitational field.</p>
+<p>This experiment emphasizes rigorous measurement techniques, error analysis, and a hands-on connection to fundamental physics.</p>
+<hr/>
+<h3 id="objective">Objective</h3>
+<p>Estimate the gravitational acceleration <span class="arithmatex">\(g\)</span> by measuring the period of a simple pendulum and performing a full uncertainty analysis.</p>
+<hr/>
+<h2 id="materials">Materials</h2>
+<ul>
+<li>String: 1.0–1.5 meters long</li>
+<li>Mass: e.g., bag of coins, metal washer, small weight</li>
+<li>Ruler or measuring tape (with known resolution)</li>
+<li>Stopwatch or smartphone timer</li>
+<li>Fixed support (e.g., hook, rod, table edge)</li>
+</ul>
+<hr/>
+<h2 id="procedure">Procedure</h2>
+<h3 id="1-setup">1. Setup</h3>
+<ul>
+<li>Construct the pendulum by tying the weight securely to one end of the string.</li>
+<li>Fix the other end to a support so that the pendulum can swing freely.</li>
+<li>Measure the length of the pendulum from the point of suspension to the center of the mass of the weight.</li>
+</ul>
+<h4 id="notation">Notation:</h4>
+<p>Let <span class="arithmatex">\(L\)</span> be the length of the pendulum (in meters)</p>
+<div class="arithmatex">\[
+\Delta L = \frac{\text{(resolution of measuring tool)}}{2}
+\]</div>
+<hr/>
+<h2 id="sample-data-table">Sample Data Table</h2>
+<table>
+<thead>
+<tr>
+<th>Trial</th>
+<th>Time for 10 Oscillations (<span class="arithmatex">\(T_{10}\)</span>) [s]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20.4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>20.2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>20.5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>20.3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20.4</td>
+</tr>
+<tr>
+<td>6</td>
+<td>20.2</td>
+</tr>
+<tr>
+<td>7</td>
+<td>20.3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>20.4</td>
+</tr>
+<tr>
+<td>9</td>
+<td>20.1</td>
+</tr>
+<tr>
+<td>10</td>
+<td>20.3</td>
+</tr>
+</tbody>
+</table>
+<p>Let:</p>
+<ul>
+<li>Mean time: <span class="arithmatex">\( \bar{T}_{10} = \frac{1}{10} \sum T_{10} \)</span></li>
+<li>Standard deviation: <span class="arithmatex">\( \sigma_{T} \)</span></li>
+<li>Uncertainty in mean: <span class="arithmatex">\( \Delta \bar{T}_{10} = \frac{\sigma_{T}}{\sqrt{n}} \)</span> where <span class="arithmatex">\(n = 10\)</span></li>
+</ul>
+<hr/>
+<h2 id="calculations">Calculations</h2>
+<h3 id="1-period-of-one-oscillation">1. Period of One Oscillation</h3>
+<div class="arithmatex">\[
+T = \frac{\bar{T}_{10}}{10}
+\]</div>
+<div class="arithmatex">\[
+\Delta T = \frac{\Delta \bar{T}_{10}}{10}
+\]</div>
+<h3 id="2-gravitational-acceleration">2. Gravitational Acceleration</h3>
+<div class="arithmatex">\[
+g = \frac{4 \pi^2 L}{T^2}
+\]</div>
+<h3 id="3-uncertainty-in-g">3. Uncertainty in <span class="arithmatex">\(g\)</span></h3>
+<div class="arithmatex">\[
+\Delta g = g \sqrt{ \left( \frac{\Delta L}{L} \right)^2 + \left( \frac{2 \Delta T}{T} \right)^2 }
+\]</div>
+<hr/>
+<h2 id="results-summary">Results Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+<th>Uncertainty</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pendulum Length <span class="arithmatex">\(L\)</span></td>
+<td>1.0000 m</td>
+<td>±0.005 m</td>
+</tr>
+<tr>
+<td>Mean Time <span class="arithmatex">\(T_{10}\)</span></td>
+<td>20.31 s</td>
+<td>±0.10 s</td>
+</tr>
+<tr>
+<td>Period <span class="arithmatex">\(T\)</span></td>
+<td>2.031 s</td>
+<td>±0.010 s</td>
+</tr>
+<tr>
+<td>Calculated <span class="arithmatex">\(g\)</span></td>
+<td>9.55 m/s²</td>
+<td>±0.18 m/s²</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="analysis">Analysis</h2>
+<h3 id="comparison">Comparison</h3>
+<ul>
+<li>Standard gravitational acceleration: 9.81 m/s²</li>
+<li>Measured value: 9.55 ± 0.18 m/s²</li>
+</ul>
+<h3 id="phyton">Phyton</h3>
+<p>import numpy as np
+import matplotlib.pyplot as plt</p>
+<h1 id="simulated-10-measurements-of-time-for-10-oscillations-seconds">Simulated 10 measurements of time for 10 oscillations (seconds)</h1>
+<p>T10_measurements = np.array([20.4, 20.2, 20.5, 20.3, 20.4, 20.2, 20.3, 20.4, 20.1, 20.3])</p>
+<h1 id="pendulum-length-meters">Pendulum length (meters)</h1>
+<p>L = 1.000
+delta_L = 0.005  # uncertainty in length (m)</p>
+<h1 id="mean-and-standard-deviation">Mean and standard deviation</h1>
+<p>T10_mean = np.mean(T10_measurements)
+T10_std = np.std(T10_measurements, ddof=1)  # sample std deviation
+delta_T10 = T10_std / np.sqrt(len(T10_measurements))</p>
+<h1 id="period-and-uncertainty">Period and uncertainty</h1>
+<p>T = T10_mean / 10
+delta_T = delta_T10 / 10</p>
+<h1 id="gravitational-acceleration">Gravitational acceleration</h1>
+<p>g = (4 * np.pi<strong>2 * L) / T</strong>2</p>
+<h1 id="uncertainty-in-g">Uncertainty in g</h1>
+<p>delta_g = g * np.sqrt((delta_L / L)<strong>2 + (2 * delta_T / T)</strong>2)</p>
+<h1 id="print-results">Print results</h1>
+<p>print(f"Mean time for 10 oscillations (T10): {T10_mean:.3f} ± {delta_T10:.3f} s")
+print(f"Period (T): {T:.3f} ± {delta_T:.3f} s")
+print(f"Calculated g: {g:.3f} ± {delta_g:.3f} m/s²")</p>
+<h1 id="-plot-1-t10-measurements-with-mean-line-">--- Plot 1: T10 measurements with mean line ---</h1>
+<p>plt.figure(figsize=(8, 4))
+plt.plot(T10_measurements, 'o-', label='Measurements')
+plt.axhline(y=T10_mean, color='red', linestyle='--', label=f'Mean = {T10_mean:.2f}s')
+plt.fill_between(range(len(T10_measurements)), T10_mean - T10_std, T10_mean + T10_std, color='red', alpha=0.1, label='±1σ')
+plt.title("Time for 10 Oscillations")
+plt.xlabel("Trial")
+plt.ylabel("Time (s)")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()</p>
+<h1 id="-plot-2-convergence-of-g-estimation-">--- Plot 2: Convergence of g estimation ---</h1>
+<p>g_estimates = (4 * np.pi<strong>2 * L) / (T10_measurements / 10)</strong>2
+plt.figure(figsize=(8, 4))
+plt.plot(g_estimates, 'o-', label='g estimates per trial')
+plt.axhline(y=g, color='green', linestyle='--', label=f'Average g = {g:.2f} m/s²')
+plt.axhline(y=9.81, color='black', linestyle=':', label='Standard g = 9.81 m/s²')
+plt.title("Estimation of g Over Trials")
+plt.xlabel("Trial")
+plt.ylabel("g (m/s²)")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()</p>
+<p><img alt="alt text" src="../image.png"/></p>
+<p><img alt="alt text" src="../image-1.png"/></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
