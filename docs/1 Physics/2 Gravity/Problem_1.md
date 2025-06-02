@@ -112,11 +112,7 @@ Again, the calculated value is very close to the square of the Earth's orbital p
 
 We can create a simplified computational model using Python to simulate circular orbits and observe the relationship between orbital period and radius. Below is an example Python script:
 
-This plot demonstrates the linear relationship between the square of the orbital period and the cube of the orbital radius, visually confirming Kepler's Third Law. The slope of the linear fit is proportional to \(1/(GM)\).
-
-The Python code calculates and plots the relationship between the radius and the period, and also plots the square of the period against the cube of the radius to demonstrate the linear relationship predicted by Kepler's Third Law. The linear fit to the \(T^2\) vs \(r^3\) plot will have a slope equal to \(\frac{4\pi^2}{GM}\).
-
-
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -164,10 +160,14 @@ plt.grid(True, which='both', ls='--')
 plt.legend()
 plt.tight_layout()
 plt.show()
-
-
+```
 
 ![alt text](image-3.png)
+
+This plot demonstrates the linear relationship between the square of the orbital period and the cube of the orbital radius, visually confirming Kepler's Third Law. The slope of the linear fit is proportional to \(1/(GM)\).
+
+The Python code calculates and plots the relationship between the radius and the period, and also plots the square of the period against the cube of the radius to demonstrate the linear relationship predicted by Kepler's Third Law. The linear fit to the \(T^2\) vs \(r^3\) plot will have a slope equal to \(\frac{4\pi^2}{GM}\).
+
 
 
 
