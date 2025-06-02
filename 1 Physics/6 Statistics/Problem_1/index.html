@@ -84,6 +84,32 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#exploring-the-central-limit-theorem-through-simulations">Exploring the Central Limit Theorem Through Simulations</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#motivation">Motivation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#problem-overview">Problem Overview</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#1-simulating-sampling-distributions">1. Simulating Sampling Distributions</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#2-sampling-and-visualization">2. Sampling and Visualization</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#3-parameter-exploration">3. Parameter Exploration</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-real-world-applications">4. Real-World Applications</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#simulation-details">Simulation Details</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#phyton-implemaentation">Phyton İmplemaentation</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_2/">Problem 2</a>
@@ -172,6 +198,96 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h2 id="exploring-the-central-limit-theorem-through-simulations">Exploring the Central Limit Theorem Through Simulations</h2>
+<h3 id="motivation">Motivation</h3>
+<p>The Central Limit Theorem (CLT) is a cornerstone of statistics. It states that the sampling distribution of the sample mean becomes approximately normal as the sample size increases – regardless of the population's original distribution. Simulations help visualize and understand this concept in an intuitive way.</p>
+<hr/>
+<h3 id="problem-overview">Problem Overview</h3>
+<h4 id="objective">Objective</h4>
+<p>Use Python simulations to explore how sample means from various population distributions approach a normal distribution as sample size increases.</p>
+<hr/>
+<h2 id="tasks">Tasks</h2>
+<h3 id="1-simulating-sampling-distributions">1. Simulating Sampling Distributions</h3>
+<p>Select different population distributions to simulate:</p>
+<ul>
+<li>Uniform distribution</li>
+<li>Exponential distribution</li>
+<li>Binomial distribution</li>
+</ul>
+<p>For each, generate a large dataset representing the population (e.g., 100,000 values).</p>
+<h3 id="2-sampling-and-visualization">2. Sampling and Visualization</h3>
+<ul>
+<li>Randomly draw samples of varying sizes (e.g., <span class="arithmatex">\(n = 5, 10, 30, 50\)</span>) from the population.</li>
+<li>Calculate the sample mean for each draw.</li>
+<li>Repeat the process (e.g., 1,000 times) to build a sampling distribution.</li>
+<li>Plot histograms of these sample means and observe their shapes.</li>
+</ul>
+<h3 id="3-parameter-exploration">3. Parameter Exploration</h3>
+<p>Explore the following:</p>
+<ul>
+<li>How the original distribution's shape affects the rate of convergence to normality.</li>
+<li>How sample size influences convergence.</li>
+<li>The effect of population variance on the spread of the sampling distribution.</li>
+</ul>
+<hr/>
+<h2 id="4-real-world-applications">4. Real-World Applications</h2>
+<p>Understand the significance of CLT in practical scenarios:</p>
+<ul>
+<li>Estimating population parameters from samples</li>
+<li>Quality control and process monitoring</li>
+<li>Financial modeling and risk assessment</li>
+</ul>
+<h3 id="simulation-details">Simulation Details</h3>
+<p>We simulate data from the following population distributions:</p>
+<ul>
+<li>Uniform distribution</li>
+<li>Exponential distribution</li>
+<li>Binomial distribution</li>
+</ul>
+<h4 id="for-each-distribution">For each distribution:</h4>
+<ul>
+<li>A population of 100,000 values is generated</li>
+<li>Samples of sizes <span class="arithmatex">\(n = 5, 10, 30, 50\)</span> are drawn repeatedly (1,000 times)</li>
+<li>Sample means are calculated and plotted as histograms</li>
+</ul>
+<h3 id="phyton-implemaentation">Phyton İmplemaentation</h3>
+<p>import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns</p>
+<p>def generate_population(dist, size=100_000, **kwargs):
+    if dist == 'uniform':
+        return np.random.uniform(kwargs.get('low', 0), kwargs.get('high', 1), size)
+    if dist == 'exponential':
+        return np.random.exponential(kwargs.get('scale', 1.0), size)
+    if dist == 'binomial':
+        return np.random.binomial(kwargs.get('n', 10), kwargs.get('p', 0.5), size)
+    raise ValueError(f"Unknown distribution: {dist}")</p>
+<p>def sample_means(pop, sample_size, n_samples=1000):
+    return [np.mean(np.random.choice(pop, sample_size, replace=False)) for _ in range(n_samples)]</p>
+<p>def plot_sampling_dists(populations, sample_sizes, n_samples=1000, bins=30):
+    for name, pop in populations.items():
+        plt.figure(figsize=(12, 8))
+        for i, n in enumerate(sample_sizes, 1):
+            means = sample_means(pop, n, n_samples)
+            plt.subplot(2, 2, i)
+            sns.histplot(means, kde=True, bins=bins)
+            plt.title(f"{name.title()} (n={n})")
+            plt.xlabel("Sample Mean")
+            plt.ylabel("Frequency")
+            plt.grid(True)
+        plt.tight_layout()
+        plt.show()</p>
+<p>if <strong>name</strong> == "<strong>main</strong>":
+    dists = {
+        'uniform':    {'low': 0, 'high': 1},
+        'exponential':{'scale': 2.0},
+        'binomial':   {'n': 10, 'p': 0.3},
+    }
+    pops = {name: generate_population(name, **params) for name, params in dists.items()}
+    sizes = [5, 10, 30, 50]
+    plot_sampling_dists(pops, sizes)</p>
+<pre><code>![alt text](image.png)
+</code></pre>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
