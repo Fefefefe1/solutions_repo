@@ -68,6 +68,8 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#4-computational-model">4. Computational Model</a>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="#5-extension-to-elliptical-orbits">5. Extension to Elliptical Orbits</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -262,39 +264,45 @@ $$G \frac{M}{r^2} = \frac{4\pi^2 r}{T^2}\]</div>
 <p>Again, the calculated value is very close to the square of the Earth's orbital period, validating Kepler's Third Law.</p>
 <h3 id="4-computational-model">4. Computational Model</h3>
 <p>We can create a simplified computational model using Python to simulate circular orbits and observe the relationship between orbital period and radius. Below is an example Python script:</p>
-<p>This plot demonstrates the linear relationship between the square of the orbital period and the cube of the orbital radius, visually confirming Kepler's Third Law. The slope of the linear fit is proportional to <span class="arithmatex">\(1/(GM)\)</span>.</p>
-<p>The Python code calculates and plots the relationship between the radius and the period, and also plots the square of the period against the cube of the radius to demonstrate the linear relationship predicted by Kepler's Third Law. The linear fit to the <span class="arithmatex">\(T^2\)</span> vs <span class="arithmatex">\(r^3\)</span> plot will have a slope equal to <span class="arithmatex">\(\frac{4\pi^2}{GM}\)</span>.</p>
-<p>import numpy as np
-import matplotlib.pyplot as plt</p>
-<h1 id="constants">Constants</h1>
-<p>G = 6.674 * 10<strong>-11  # Gravitational constant (N·m²/kg²)
-M = 1.989 * 10</strong>30   # Mass of the Sun (kg)</p>
-<h1 id="function-to-calculate-orbital-period">Function to calculate orbital period</h1>
-<p>def orbital_period(r):
-    return np.sqrt((4 * np.pi<strong>2 * r</strong>3) / (G * M))</p>
-<h1 id="radii-for-the-curve">Radii for the curve</h1>
-<p>radii = np.linspace(1e10, 5e12, 100)  # in meters
-T_squared = (orbital_period(radii))<strong>2
-r_cubed = radii</strong>3</p>
-<h1 id="planetary-data-semi-major-axis-in-meters-orbital-period-in-seconds">Planetary data (semi-major axis in meters, orbital period in seconds)</h1>
-<p>planets = {
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.674 * 10**-11  # Gravitational constant (N·m²/kg²)
+M = 1.989 * 10**30   # Mass of the Sun (kg)
+
+# Function to calculate orbital period
+def orbital_period(r):
+    return np.sqrt((4 * np.pi**2 * r**3) / (G * M))
+
+# Radii for the curve
+radii = np.linspace(1e10, 5e12, 100)  # in meters
+T_squared = (orbital_period(radii))**2
+r_cubed = radii**3
+
+# Planetary data (semi-major axis in meters, orbital period in seconds)
+planets = {
     "Mercury": (5.79e10, 7.6e6),
     "Venus":   (1.082e11, 1.94e7),
     "Earth":   (1.496e11, 3.156e7),
     "Mars":    (2.279e11, 5.93e7),
     "Jupiter": (7.785e11, 3.74e8)
-}</p>
-<h1 id="prepare-planet-data-for-plotting">Prepare planet data for plotting</h1>
-<p>planet_r_cubed = [r<strong>3 for r, T in planets.values()]
-planet_T_squared = [T</strong>2 for r, T in planets.values()]</p>
-<h1 id="plot-t2-vs-r3-on-a-log-log-scale">Plot T^2 vs r^3 on a log-log scale</h1>
-<p>plt.figure(figsize=(8, 6))
+}
+
+# Prepare planet data for plotting
+planet_r_cubed = [r**3 for r, T in planets.values()]
+planet_T_squared = [T**2 for r, T in planets.values()]
+
+# Plot T^2 vs r^3 on a log-log scale
+plt.figure(figsize=(8, 6))
 plt.plot(r_cubed, T_squared, label="T² vs r³ (Kepler's Law)", color='blue')
-plt.scatter(planet_r_cubed, planet_T_squared, color='red', s=50, label="Planets", zorder=5)</p>
-<h1 id="add-planet-labels">Add planet labels</h1>
-<p>for name, (r, T) in planets.items():
-    plt.text(r<strong>3, T</strong>2, name, fontsize=9, ha='right')</p>
-<p>plt.xscale('log')
+plt.scatter(planet_r_cubed, planet_T_squared, color='red', s=50, label="Planets", zorder=5)
+
+# Add planet labels
+for name, (r, T) in planets.items():
+    plt.text(r**3, T**2, name, fontsize=9, ha='right')
+
+plt.xscale('log')
 plt.yscale('log')
 plt.xlabel("r³ (m³)")
 plt.ylabel("T² (s²)")
@@ -302,8 +310,11 @@ plt.title("Kepler's Third Law: T² vs r³")
 plt.grid(True, which='both', ls='--')
 plt.legend()
 plt.tight_layout()
-plt.show()</p>
+plt.show()
+</code></pre>
 <p><img alt="alt text" src="../image-3.png"/></p>
+<p>This plot demonstrates the linear relationship between the square of the orbital period and the cube of the orbital radius, visually confirming Kepler's Third Law. The slope of the linear fit is proportional to <span class="arithmatex">\(1/(GM)\)</span>.</p>
+<p>The Python code calculates and plots the relationship between the radius and the period, and also plots the square of the period against the cube of the radius to demonstrate the linear relationship predicted by Kepler's Third Law. The linear fit to the <span class="arithmatex">\(T^2\)</span> vs <span class="arithmatex">\(r^3\)</span> plot will have a slope equal to <span class="arithmatex">\(\frac{4\pi^2}{GM}\)</span>.</p>
 <h3 id="5-extension-to-elliptical-orbits">5. Extension to Elliptical Orbits</h3>
 <p>For elliptical orbits, Kepler's Third Law still holds, but the radius <span class="arithmatex">\(r\)</span> is replaced by the semi-major axis <span class="arithmatex">\(a\)</span> of the ellipse. The semi-major axis is half of the longest diameter of the ellipse and is the average of the perihelion (closest approach) and aphelion (farthest distance) distances. The law can be written as:</p>
 <div class="arithmatex">\[T^2 = \frac{4\pi^2 a^3}{GM}\]</div>
