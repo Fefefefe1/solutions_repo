@@ -70,6 +70,18 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#phyton-implemation">Phyton İmplemation</a>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="#results-velocities-in-kms">📊 Results (Velocities in km/s)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#missions-to-other-planets">Missions to Other Planets:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#interstellar-travel">Interstellar Travel:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#achieving-these-velocities">Achieving These Velocities:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#trajectory-planning">Trajectory Planning:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#asteroid-deflection">Asteroid Deflection:</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -297,51 +309,59 @@
 </tbody>
 </table>
 <h3 id="phyton-implemation">Phyton İmplemation</h3>
-<p>import math
+<pre><code class="language-python">import math
 import matplotlib.pyplot as plt
-import pandas as pd</p>
-<p>def calculate_cosmic_velocities(mass, radius, solar_mass=1.989e30, earth_orbital_radius=1.496e11):
-    G = 6.674e-11</p>
-<pre><code>v1 = math.sqrt((G * mass) / radius)
-v2 = math.sqrt((2 * G * mass) / radius)
+import pandas as pd
 
-earth_orbital_velocity = math.sqrt((G * solar_mass) / earth_orbital_radius)
-solar_escape_velocity = math.sqrt((2 * G * solar_mass) / earth_orbital_radius)
+def calculate_cosmic_velocities(mass, radius, solar_mass=1.989e30, earth_orbital_radius=1.496e11):
+    G = 6.674e-11
 
-# Simplified version: escape Earth and reach solar escape from Earth's orbit
-v3 = math.sqrt(solar_escape_velocity**2 + (v2 - earth_orbital_velocity)**2)
+    v1 = math.sqrt((G * mass) / radius)
+    v2 = math.sqrt((2 * G * mass) / radius)
 
-return v1, v2, v3
-</code></pre>
-<h1 id="add-moon-to-celestial-bodies">Add Moon to celestial bodies</h1>
-<p>celestial_bodies = {
+    earth_orbital_velocity = math.sqrt((G * solar_mass) / earth_orbital_radius)
+    solar_escape_velocity = math.sqrt((2 * G * solar_mass) / earth_orbital_radius)
+
+    # Simplified version: escape Earth and reach solar escape from Earth's orbit
+    v3 = math.sqrt(solar_escape_velocity**2 + (v2 - earth_orbital_velocity)**2)
+
+    return v1, v2, v3
+
+# Add Moon to celestial bodies
+celestial_bodies = {
     "Earth": {"mass": 5.972e24, "radius": 6.371e6},
     "Moon": {"mass": 7.342e22, "radius": 1.7371e6},
     "Mars": {"mass": 6.39e23, "radius": 3.390e6},
     "Jupiter": {"mass": 1.898e27, "radius": 6.9911e7},
-}</p>
-<p>velocities = {}
+}
+
+velocities = {}
 for body, data in celestial_bodies.items():
     v1, v2, v3 = calculate_cosmic_velocities(data["mass"], data["radius"])
-    velocities[body] = {"v1": v1, "v2": v2, "v3": v3}</p>
-<p>print("Cosmic Velocities (in m/s):")
+    velocities[body] = {"v1": v1, "v2": v2, "v3": v3}
+
+print("Cosmic Velocities (in m/s):")
 for body, v in velocities.items():
     print(f"{body}:")
     print(f"  v1 (Orbital): {v['v1']:.2f} m/s")
     print(f"  v2 (Escape): {v['v2']:.2f} m/s")
-    print(f"  v3 (Solar Escape): {v['v3']:.2f} m/s")</p>
-<h1 id="tabular-display">Tabular display</h1>
-<p>df = pd.DataFrame(velocities).T
+    print(f"  v3 (Solar Escape): {v['v3']:.2f} m/s")
+
+# Tabular display
+df = pd.DataFrame(velocities).T
 df.columns = ["v1 (Orbital)", "v2 (Escape)", "v3 (Solar Escape)"]
-df_kms = df.applymap(lambda x: f"{x/1000:.2f} km/s")</p>
-<p>print("\nCosmic Velocities Table (in km/s):")
-print(df_kms)</p>
-<h1 id="visualization">Visualization</h1>
-<p>bodies = list(velocities.keys())
+df_kms = df.applymap(lambda x: f"{x/1000:.2f} km/s")
+
+print("\nCosmic Velocities Table (in km/s):")
+print(df_kms)
+
+# Visualization
+bodies = list(velocities.keys())
 v1_values = [velocities[body]["v1"] for body in bodies]
 v2_values = [velocities[body]["v2"] for body in bodies]
-v3_values = [velocities[body]["v3"] for body in bodies]</p>
-<p>plt.figure(figsize=(10, 6))
+v3_values = [velocities[body]["v3"] for body in bodies]
+
+plt.figure(figsize=(10, 6))
 plt.plot(bodies, v1_values, marker='o', linestyle='--', label='First Cosmic Velocity (v1)')
 plt.plot(bodies, v2_values, marker='o', linestyle='--', label='Second Cosmic Velocity (v2)')
 plt.plot(bodies, v3_values, marker='o', linestyle='--', label='Third Cosmic Velocity (v3)')
@@ -351,7 +371,8 @@ plt.title("Cosmic Velocities of Celestial Bodies")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.show()</p>
+plt.show()
+</code></pre>
 <h3 id="results-velocities-in-kms">📊 Results (Velocities in km/s)</h3>
 <table>
 <thead>
