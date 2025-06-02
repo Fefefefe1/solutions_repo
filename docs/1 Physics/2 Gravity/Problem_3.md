@@ -87,6 +87,7 @@ The Earth is drawn to scale in the plot as a blue circle, and the trajectories a
 
 The simulation also now visually shows the Earth in the plot for context.
 
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -193,6 +194,7 @@ plt.grid(True)
 plt.legend()
 plt.tight_layout()
 plt.show()
+```
 
 ![alt text](image-6.png)
 
