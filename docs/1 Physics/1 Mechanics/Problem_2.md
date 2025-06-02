@@ -378,4 +378,9 @@ if __name__ == "__main__":
     driving_period4 = 2 * np.pi / omega4
     plot_poincare_section(sol4.t, sol4.y[0], sol4.y[1], driving_period4, "Poincaré Section: Potentially Chaotic Driven Pendulum")
     ```
-    
+
+    # **Python Script for Forced Damped Pendulum Simulation**
+
+This Python script defines the differential equation for the forced damped pendulum and provides functions to simulate its motion, plot the angular displacement over time, plot the phase diagram, and generate a Poincaré section. The `if __name__ == "__main__":` block demonstrates simulations for different parameter sets, including cases with no driving, driving near resonance, higher damping, and parameters that might lead to chaotic behavior.
+
+To observe the transition to chaos more systematically, one could vary a parameter (e.g., driving amplitude *A*) and observe the changes in the phase diagrams and Poincaré sections. For regular periodic motion, the Poincaré section will consist of a few discrete points. As the system approaches chaos, the number of points increases, and they can form complex patterns indicative of a strange attractor.
