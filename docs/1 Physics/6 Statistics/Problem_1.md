@@ -69,8 +69,7 @@ We simulate data from the following population distributions:
 
 ### Phyton İmplemaentation
 
-```python
-
+ ```phyton
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -109,7 +108,6 @@ if __name__ == "__main__":
     pops = {name: generate_population(name, **params) for name, params in dists.items()}
     sizes = [5, 10, 30, 50]
     plot_sampling_dists(pops, sizes)
-    
-    ```
+     ```
 
     ![alt text](image.png)
