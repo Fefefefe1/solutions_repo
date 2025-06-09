@@ -251,8 +251,8 @@
 <li>Sample means are calculated and plotted as histograms</li>
 </ul>
 <h3 id="phyton-implemaentation">Phyton İmplemaentation</h3>
-<p>```python
-import numpy as np
+<p>```python</p>
+<p>import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns</p>
 <p>def generate_population(dist, size=100_000, **kwargs):
@@ -277,8 +277,8 @@ import seaborn as sns</p>
             plt.ylabel("Frequency")
             plt.grid(True)
         plt.tight_layout()
-        plt.show()</p>
-<p>if <strong>name</strong> == "<strong>main</strong>":
+        plt.show()
+if <strong>name</strong> == "<strong>main</strong>":
     dists = {
         'uniform':    {'low': 0, 'high': 1},
         'exponential':{'scale': 2.0},
@@ -286,9 +286,10 @@ import seaborn as sns</p>
     }
     pops = {name: generate_population(name, **params) for name, params in dists.items()}
     sizes = [5, 10, 30, 50]
-    plot_sampling_dists(pops, sizes)
-    ```
-    <img alt="alt text" src="../image.png"/></p>
+    plot_sampling_dists(pops, sizes)</p>
+<pre><code>```
+![alt text](image.png)
+</code></pre>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
