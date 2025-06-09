@@ -265,3 +265,5 @@ run_and_visualize(G2, pos2, 'start', 'end', "Circuit 2: Parallel Configuration")
 ![alt text](image-1.png)
 
 ![alt text](image-2.png)
+
+![alt text](image-3.png)
