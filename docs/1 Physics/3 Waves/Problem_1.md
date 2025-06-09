@@ -157,3 +157,7 @@ generate_gif(polygon_vertices(5))  # Generates 'interference_pentagon.gif'
 ![alt text](image.png)
 
 ![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)
