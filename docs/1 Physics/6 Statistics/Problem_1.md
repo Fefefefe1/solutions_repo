@@ -110,4 +110,4 @@ if __name__ == "__main__":
     plot_sampling_dists(pops, sizes)
     ```
 
-    ![alt text](image.png)
+  ![alt text](image.png)
