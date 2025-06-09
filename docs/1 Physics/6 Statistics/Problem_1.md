@@ -73,6 +73,7 @@ We simulate data from the following population distributions:
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import math
 
 def generate_population(dist, size=100_000, **kwargs):
     if dist == 'uniform':
@@ -88,17 +89,24 @@ def sample_means(pop, sample_size, n_samples=1000):
 
 def plot_sampling_dists(populations, sample_sizes, n_samples=1000, bins=30):
     for name, pop in populations.items():
-        plt.figure(figsize=(12, 8))
+        num_sizes = len(sample_sizes)
+        rows = math.ceil(num_sizes / 2)
+        cols = 2 if num_sizes > 1 else 1
+
+        plt.figure(figsize=(6 * cols, 4 * rows))
         for i, n in enumerate(sample_sizes, 1):
             means = sample_means(pop, n, n_samples)
-            plt.subplot(2, 2, i)
+            plt.subplot(rows, cols, i)
             sns.histplot(means, kde=True, bins=bins)
-            plt.title(f"{name.title()} (n={n})")
+            plt.title(f"{name.title()} Distribution\nSample Size = {n}")
             plt.xlabel("Sample Mean")
             plt.ylabel("Frequency")
             plt.grid(True)
-        plt.tight_layout()
+
+        plt.suptitle(f"Sampling Distributions of Sample Means - {name.title()}", fontsize=16)
+        plt.tight_layout(rect=[0, 0, 1, 0.96])
         plt.show()
+
 if __name__ == "__main__":
     dists = {
         'uniform':    {'low': 0, 'high': 1},
@@ -108,6 +116,7 @@ if __name__ == "__main__":
     pops = {name: generate_population(name, **params) for name, params in dists.items()}
     sizes = [5, 10, 30, 50]
     plot_sampling_dists(pops, sizes)
+
     ```
 
   ![alt text](image.png)
