@@ -64,158 +64,371 @@ Two resistors R₁ and R₂ in parallel:
 
 ### Phyton İmplemntaion
 ```python
+from IPython import get_ipython
+from IPython.display import display
 import matplotlib.pyplot as plt
 import networkx as nx
 
-def draw_circuit(G, pos, title, highlight_paths=None):
-    plt.figure(figsize=(10, 6))
-    node_colors = ['#4CAF50' if node in ['start', 'end'] else '#2196F3' for node in G.nodes()]
+class ResistorNetworkAnalyzer:
+    def __init__(self):
+        self.step_count = 0
+        self.visualization_steps = []
 
-    nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=1800, edgecolors='black', linewidths=2)
-    nx.draw_networkx_labels(G, pos, font_size=14, font_weight='bold')
-
-    # Draw all edges in black first (thin)
-    nx.draw_networkx_edges(G, pos, width=2, edge_color='black')
-
-    # Draw highlighted edges thicker and colored
-    if highlight_paths:
-        for i, path_edges in enumerate(highlight_paths):
-            color = ['#FF5722', '#3F51B5', '#009688'][i % 3]  # Orange, Blue, Teal
-            edgelist = []
-            for e in path_edges:
-                if isinstance(e, (list, tuple)) and len(e) == 2:
-                    edgelist.append(e)
-            nx.draw_networkx_edges(G, pos, edgelist=edgelist, edge_color=color, width=6, alpha=0.7)
-
-    # Edge labels showing resistance with white background for readability
-    edge_labels = {(u, v): f"{d['resistance']}Ω" for u, v, d in G.edges(data=True)}
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=12,
-                                bbox=dict(facecolor='white', edgecolor='none', alpha=0.8,
-                                          boxstyle='round,pad=0.3'))
-
-    plt.title(title, fontsize=16, pad=20)
-    plt.axis('off')
-    plt.tight_layout()
-    plt.show()
-
-
-def get_all_edges(graph, u, v):
-    if graph.is_multigraph():
-        return [graph[u][v][key] for key in graph[u][v]]
-    else:
-        return [graph.get_edge_data(u, v)]
-
-
-def combine_parallel_resistances(edges_data):
-    total_reciprocal = 0
-    for edge in edges_data:
-        total_reciprocal += 1 / edge['resistance']
-    return 1 / total_reciprocal
-
-
-def add_or_update_edge(graph, u, v, resistance):
-    if graph.has_edge(u, v):
-        existing_edges = get_all_edges(graph, u, v)
-        resistances = [edge['resistance'] for edge in existing_edges] + [resistance]
-        combined = combine_parallel_resistances([{'resistance': r} for r in resistances])
-        for _ in existing_edges:
-            graph.remove_edge(u, v)
-        graph.add_edge(u, v, resistance=round(combined, 5))
-    else:
-        graph.add_edge(u, v, resistance=round(resistance, 5))
-
-
-def get_node_pairs_with_parallel_edges(graph):
-    pairs = []
-    if graph.is_multigraph():
-        checked = set()
-        for u, v, key in graph.edges(keys=True):
-            if (u, v) not in checked and (v, u) not in checked:
-                count = graph.number_of_edges(u, v)
-                if count > 1:
-                    pairs.append((u, v))
-                checked.add((u, v))
-    return pairs
-
-
-def get_final_resistance(G, source_node, sink_node):
-    if G.is_multigraph():
-        edges_data = [G[source_node][sink_node][key] for key in G[source_node][sink_node]]
-        total_reciprocal = sum(1 / edge['resistance'] for edge in edges_data)
-        return 1 / total_reciprocal
-    else:
-        return G[source_node][sink_node]['resistance']
-
-
-def equivalent_resistance_with_visualization(graph, source_node, sink_node):
-    G = graph.copy()
-    simplification_steps = []
-
-    while True:
-        edges_combined_this_step = []
-
-        # Series Reduction: nodes with degree 2 excluding source and sink
-        series_nodes = [node for node in G.nodes if node not in (source_node, sink_node) and G.degree(node) == 2]
-
-        for node in series_nodes:
-            neighbors = list(G.neighbors(node))
-            if len(neighbors) != 2:
-                continue
-
-            edges_to_neighbors = []
-            for nbr in neighbors:
-                edges_data = get_all_edges(G, node, nbr)
-                if len(edges_data) > 1:
-                    r_parallel = combine_parallel_resistances(edges_data)
+    def _get_edge_labels(self, G):
+        """Helper function to generate edge labels with resistance values"""
+        edge_labels = {}
+        for u, v, data in G.edges(data=True):
+            if 'resistance' in data:
+                # Handle MultiGraph key access here as well
+                if isinstance(G, nx.MultiGraph) and len(G[u][v]) > 1:
+                    # If multiple edges, show all resistances
+                    labels = [f"{d.get('resistance', 0):.2f}Ω" for k, d in G[u][v].items()]
+                    edge_labels[(u, v)] = ', '.join(labels)
                 else:
-                    r_parallel = edges_data[0]['resistance']
-                edges_to_neighbors.append((nbr, r_parallel))
+                    edge_labels[(u, v)] = f"{data['resistance']:.2f}Ω"
+            # Removed the redundant elif for MultiGraph, handled above
+        return edge_labels
 
-            combined_resistance = edges_to_neighbors[0][1] + edges_to_neighbors[1][1]
+    def draw_circuit(self, G, pos, title, highlight_edges=None):
+        """Improved visualization function with better highlighting"""
+        plt.figure(figsize=(10, 6))
 
-            combined_edges = []
-            for nbr in neighbors:
-                edges_data = get_all_edges(G, node, nbr)
-                for _ in edges_data:
-                    combined_edges.append((min(node, nbr), max(node, nbr)))
+        # Node styling - Tüm düğümler kırmızı ve kare şeklinde
+        node_colors = ['#FF0000' for node in G.nodes()]  # Tüm düğümler için kırmızı renk
+        nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=1800, 
+                             node_shape='s', edgecolors='black', linewidths=2)  # Kare şekil
+        nx.draw_networkx_labels(G, pos, font_size=14, font_weight='bold')
 
-            G.remove_node(node)
-            u, v = neighbors[0], neighbors[1]
-            add_or_update_edge(G, u, v, combined_resistance)
-
-            edges_combined_this_step.append(combined_edges)
-
-        # Parallel Reduction: edges with multiple parallel edges
-        for (u, v) in get_node_pairs_with_parallel_edges(G):
-            parallel_edges = get_all_edges(G, u, v)
-            if len(parallel_edges) > 1:
-                combined_resistance = combine_parallel_resistances(parallel_edges)
-
-                combined_edges = []
-                for _ in parallel_edges:
-                    combined_edges.append((min(u, v), max(u, v)))
-
-                for _ in parallel_edges:
-                    G.remove_edge(u, v)
-
-                G.add_edge(u, v, resistance=round(combined_resistance, 5))
-
-                edges_combined_this_step.append(combined_edges)
-
-        if len(G.edges) == 1 and G.has_edge(source_node, sink_node):
-            simplification_steps.append(edges_combined_this_step)
-            break
-
-        if not edges_combined_this_step:
-            raise Exception("Circuit cannot be further simplified using series-parallel reductions")
-
-        simplification_steps.append(edges_combined_this_step)
-
-    final_resistance = get_final_resistance(G, source_node, sink_node)
-    return final_resistance, simplification_steps
+        # Draw all edges
+        # Need to handle MultiGraph edges explicitly for drawing
+        if isinstance(G, nx.MultiGraph):
+             # Draw each edge individually for MultiGraphs
+            for u, v, key, data in G.edges(keys=True, data=True):
+                 # Use connectionstyle to curve parallel edges for better visibility
+                 nx.draw_networkx_edges(G, pos, edgelist=[(u,v)], width=2, edge_color='black', connectionstyle='arc3,rad=0.1')
+        else:
+             nx.draw_networkx_edges(G, pos, width=2, edge_color='black')
 
 
-# ======= Example Circuit 1 =======
+        # Highlight edges that were modified
+        if highlight_edges:
+             # Need to handle MultiGraph highlighting carefully
+             if isinstance(G, nx.MultiGraph):
+                 highlight_edges_with_keys = []
+                 for u, v in highlight_edges:
+                     if G.has_edge(u, v):
+                         # Highlight all edges between u and v (assuming highlight_edges contains the pairs that were combined)
+                         # A more precise highlighting would require knowing the keys of the edges that were removed.
+                         # For visualization purposes, highlighting the path between nodes u and v is often sufficient.
+                         for key in G[u][v]:
+                              highlight_edges_with_keys.append((u, v, key))
+
+
+                 if highlight_edges_with_keys:
+                      nx.draw_networkx_edges(G, pos, edgelist=highlight_edges_with_keys,
+                                 edge_color='#FF5722', width=6, alpha=0.7, connectionstyle='arc3,rad=0.1')
+             else:
+                nx.draw_networkx_edges(G, pos, edgelist=highlight_edges,
+                                 edge_color='#FF5722', width=6, alpha=0.7)
+
+
+        # Edge labels with resistance values
+        edge_labels = self._get_edge_labels(G)
+        # nx.draw_networkx_edge_labels has issues with MultiGraph parallel edges.
+        # It often labels only one of the parallel edges or overlaps labels.
+        # A more advanced labeling for MultiGraphs might involve manually positioning labels.
+        # For this example, we will keep the standard labeling, but be aware of limitations.
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=12,
+                                   bbox=dict(facecolor='white', edgecolor='none',
+                                            alpha=0.8, boxstyle='round,pad=0.3'))
+
+        plt.title(title, fontsize=16, pad=20)
+        plt.axis('off')
+        plt.tight_layout()
+        # Check if running in a Jupyter environment before trying to display
+        ipython = get_ipython()
+        if ipython is not None:
+            display(plt.gcf()) # Use display for inline plotting in Jupyter
+        else:
+            plt.show() # Fallback for non-Jupyter environments
+        plt.close() # Close the figure after showing to prevent memory issues
+
+
+    def combine_series(self, G, pos):
+        """Combine series resistors with visualization"""
+        changed = True
+        while changed:
+            changed = False
+            for node in list(G.nodes):
+                # Exclude terminal nodes and check degree
+                # For MultiGraph, degree counts each edge
+                if node not in ("start", "end", "bas", "son") and G.degree(node) == 2:
+                    neighbors = list(G.neighbors(node))
+                    # Ensure there are exactly two distinct neighbors
+                    if len(neighbors) == 2 and neighbors[0] != neighbors[1]:
+                           u, v = neighbors
+                           # In a MultiGraph, need to check if there's only one edge between node and each neighbor
+                           if isinstance(G, nx.MultiGraph):
+                                if G.number_of_edges(node, u) > 1 or G.number_of_edges(node, v) > 1:
+                                    continue # Skip if there are parallel edges connected to this node
+
+                                # Assuming a single edge, get data for key 0 (default for add_edge in MultiGraph)
+                                try:
+                                    r1 = G[node][u][0].get('resistance', 0)
+                                    r2 = G[node][v][0].get('resistance', 0)
+                                except KeyError:
+                                     # Handle cases where edge key 0 doesn't exist (unlikely with add_edge but safe)
+                                     print(f"Error accessing edge data for node {node} and neighbors {u}, {v}. Skipping series combination.")
+                                     continue
+
+                           else: # Standard Graph
+                                try:
+                                    r1 = G[node][u].get('resistance', 0)
+                                    r2 = G[node][v].get('resistance', 0)
+                                except KeyError:
+                                     print(f"Error accessing edge data for node {node} and neighbors {u}, {v}. Skipping series combination.")
+                                     continue
+
+
+                           if r1 <= 0 or r2 <= 0: # Check for non-positive resistance
+                               print(f"Warning: Non-positive resistance detected at node {node}. Skipping series combination.")
+                               continue
+
+                           combined = r1 + r2
+
+                           # Store edges being combined for visualization - assuming single edges in series
+                           # For visualization, we only need the node pairs, not keys, for highlight_edges
+                           edges_to_highlight = [(node, u), (node, v)]
+
+                           # Modify the graph
+                           G.remove_node(node)
+                           # When adding edge in MultiGraph, a new key is assigned (usually 0 if first edge)
+                           G.add_edge(u, v, resistance=combined)
+                           changed = True
+                           self.step_count += 1
+
+                           # Visualize this step
+                           title = f"Step {self.step_count}: Series {u}-{node}-{v} → {combined:.2f}Ω"
+                           self.draw_circuit(G, pos, title, edges_to_highlight)
+                           # For visualization steps storage, store the graph copy
+                           self.visualization_steps.append((G.copy(), title, edges_to_highlight))
+                           break  # Restart iteration after modification
+            if changed:
+                break  # Ensure we break after a change to avoid infinite loops
+
+
+    def combine_parallel(self, G, pos):
+        """Combine parallel resistors with visualization"""
+        # This function is primarily designed for MultiGraph.
+        # nx.Graph does not support parallel edges.
+        if not isinstance(G, nx.MultiGraph):
+            return # Do nothing if not a MultiGraph
+
+        changed = True
+        while changed:
+            changed = False
+            parallel_pairs = self._find_parallel_pairs(G)
+
+            for u, v in parallel_pairs:
+                # Ensure nodes are not terminals unless source/sink are in parallel
+                # We allow combining parallel paths between 'start'/'bas' and 'end'/'son'
+                is_terminal_pair = (u in ("start", "end", "bas", "son") and v in ("start", "end", "bas", "son"))
+                is_single_terminal = (u in ("start", "end", "bas", "son") or v in ("start", "end", "bas", "son")) and not is_terminal_pair
+
+                if is_single_terminal:
+                     # Don't combine parallel edges connected to only one terminal unless it's the final source/sink pair
+                     continue
+
+
+                edges_data = self._get_parallel_edges_data(G, u, v)
+                if len(edges_data) > 1:
+                    try:
+                        # Check for non-positive resistance to avoid division by zero or invalid calculations
+                        if any(e.get('resistance', 0) <= 0 for e in edges_data):
+                            print(f"Warning: Non-positive resistance detected between {u} and {v}. Cannot combine parallel.")
+                            continue
+
+                        # Calculate combined resistance for parallel resistors
+                        conductances = [1/e['resistance'] for e in edges_data]
+                        combined = 1 / sum(conductances)
+
+                        # Store edges that were combined for visualization (as node pairs)
+                        # For visualization, we just need the node pair (u,v) to highlight the connection
+                        edges_to_highlight = [(u, v)]
+
+                        # Modify the graph: remove all parallel edges and add a single new one
+                        # Need to get the keys before removing
+                        keys_to_remove = list(G[u][v].keys())
+                        G.remove_edges_from([(u, v, k) for k in keys_to_remove])
+
+                        # Add the new combined edge (usually gets key 0 if first edge)
+                        G.add_edge(u, v, resistance=combined)
+                        changed = True
+                        self.step_count += 1
+
+                        # Visualize this step
+                        title = f"Step {self.step_count}: Parallel {u}-{v} → {combined:.4f}Ω"
+                        # For visualization, pass the node pair for highlighting
+                        self.draw_circuit(G, pos, title, edges_to_highlight)
+                        # For visualization steps storage, store the graph copy
+                        self.visualization_steps.append((G.copy(), title, edges_to_highlight))
+                        break  # Restart iteration after modification
+                    except KeyError as e:
+                        print(f"Error accessing edge data between {u} and {v}: {e}")
+                        continue
+            if changed:
+                break  # Ensure we break after a change to avoid infinite loops
+
+
+    def _find_parallel_pairs(self, G):
+        """Find all pairs of nodes with parallel edges in a MultiGraph"""
+        pairs = set()
+        if isinstance(G, nx.MultiGraph):
+            # Iterate through all edges, consider undirected pairs
+            for u, v, key in G.edges(keys=True):
+                 # Use a canonical representation for the pair (e.g., sorted tuple)
+                pair = tuple(sorted((u, v)))
+                # Check if there are more than 1 edges between u and v (in either direction for undirected)
+                if G.number_of_edges(u, v) > 1 or G.number_of_edges(v, u) > 1:
+                    pairs.add(pair)
+        # No need to check for parallel edges in nx.Graph, as it doesn't support them
+        return list(pairs)
+
+    def _get_parallel_edges_data(self, G, u, v):
+        """Get data for all parallel edges between two nodes in a MultiGraph"""
+        if isinstance(G, nx.MultiGraph):
+            edge_data_list = []
+            # Check if the edge (u,v) exists and add its data
+            if u in G and v in G[u]:
+                edge_data_list.extend([G[u][v][key] for key in G[u][v]])
+            # Check the reverse direction (v,u) as well for undirected graphs
+            if v in G and u in G[v] and u != v: # Avoid adding self-loops twice
+                 edge_data_list.extend([G[v][u][key] for key in G[v][u]])
+
+            # Remove potential duplicates if an edge was added in both directions (unlikely with how networkx works by default for undirected)
+            # Simple approach: convert to a set of unique edge data dictionaries (requires dictionaries to be hashable, which they are not)
+            # Better approach: collect edge keys seen to avoid duplicates
+            seen_keys = set()
+            unique_edge_data = []
+            # Iterate through edges (u,v) and (v,u) with keys
+            if u in G and v in G[u]:
+                 for key, data in G[u][v].items():
+                      if (u,v,key) not in seen_keys and (v,u,key) not in seen_keys: # Check both directions
+                            unique_edge_data.append(data)
+                            seen_keys.add((u,v,key))
+                            seen_keys.add((v,u,key)) # Add reverse for undirected check
+
+            return unique_edge_data
+
+        return [] # Return empty list if not MultiGraph or no parallel edges
+
+
+    def simplify_network(self, G, pos, source, sink):
+        """Main function to simplify the resistor network"""
+        self.step_count = 0
+        self.visualization_steps = []
+
+        # Initial visualization
+        self.draw_circuit(G, pos, "Original Circuit")
+
+        # Make a copy to work with
+        # Use deepcopy if edge attributes might contain mutable objects, though 'resistance' is float.
+        working_graph = G.copy()
+
+        # Alternate between series and parallel combinations
+        # Use node count as well, as series combination removes nodes
+        prev_state = (len(working_graph.nodes()), len(working_graph.edges()))
+
+        # Limit the number of iterations to prevent infinite loops in complex or irreducible circuits
+        # A more robust approach might involve tracking visited states or using a more sophisticated simplification algorithm.
+        max_iterations = len(G.nodes()) + len(G.edges()) * 2 # Increased limit slightly
+        iteration_count = 0
+
+        while iteration_count < max_iterations:
+            series_changed = False
+            parallel_changed = False
+
+            # Perform one pass of series combinations
+            nodes_before_series = list(working_graph.nodes())
+            self.combine_series(working_graph, pos)
+            nodes_after_series = list(working_graph.nodes())
+            if len(nodes_before_series) != len(nodes_after_series):
+                series_changed = True
+
+            # Perform one pass of parallel combinations
+            edges_before_parallel = len(list(working_graph.edges()))
+            self.combine_parallel(working_graph, pos)
+            edges_after_parallel = len(list(working_graph.edges()))
+            if edges_before_parallel != edges_after_parallel:
+                parallel_changed = True
+
+
+            # Check if we're stuck (no changes in nodes or edges)
+            current_state = (len(working_graph.nodes()), len(list(working_graph.edges())))
+            if current_state == prev_state:
+                break
+            prev_state = current_state
+            iteration_count += 1
+
+        # Check for maximum iterations reached
+        if iteration_count == max_iterations and current_state != prev_state:
+             print(f"Warning: Maximum iterations ({max_iterations}) reached before full simplification. The circuit might be irreducible by series/parallel combinations or more complex.")
+
+
+        # Final result
+        # Initialize final_resistance to None outside the try block
+        final_resistance = None
+
+        try:
+            # Check if the graph has been reduced to a single edge between source and sink
+            if working_graph.has_edge(source, sink):
+                # If it's a MultiGraph, there might be multiple parallel edges left between source and sink.
+                # The equivalent resistance is the parallel combination of these.
+                if isinstance(working_graph, nx.MultiGraph) and working_graph.number_of_edges(source, sink) > 1:
+                    print(f"Multiple parallel paths remaining between {source} and {sink}. Calculating final equivalent resistance.")
+                    edges_data = self._get_parallel_edges_data(working_graph, source, sink)
+                    if edges_data:
+                        # Check for non-positive resistance before calculating
+                        if any(e.get('resistance', 0) <= 0 for e in edges_data):
+                             print(f"Warning: Non-positive resistance detected between {source} and {sink}. Cannot calculate final equivalent resistance.")
+                             final_resistance = None # Keep it None or set to NaN
+                        else:
+                           conductances = [1/e['resistance'] for e in edges_data]
+                           final_resistance = 1 / sum(conductances)
+                           print(f"Final equivalent resistance: {final_resistance:.4f}Ω") # Increased precision for final result
+                    else:
+                         print(f"No edges found between {source} and {sink} despite has_edge reporting True (unexpected).")
+                         final_resistance = None
+
+                else: # Simple Graph or MultiGraph with only one edge left
+                     final_resistance = working_graph[source][sink].get('resistance') # Use .get() for safety
+                     if final_resistance is not None:
+                          print(f"Final equivalent resistance: {final_resistance:.2f}Ω")
+                     else:
+                         print(f"Edge between {source} and {sink} found, but resistance attribute is missing.")
+
+
+            else:
+                # This block is executed if no single source-sink edge exists after simplification
+                print("Could not reduce to a single equivalent resistance between source and sink.")
+                # final_resistance remains None, which is now initialized
+        except KeyError as e:
+            print(f"Error accessing edge data for final resistance between {source} and {sink}: {e}")
+            final_resistance = None # Ensure it's None in case of error
+        except Exception as e:
+             print(f"An unexpected error occurred during final resistance calculation: {e}")
+             final_resistance = None
+
+
+        # Draw the final simplified circuit
+        self.draw_circuit(working_graph, pos, f"Final Simplified Circuit (Steps: {self.step_count})")
+
+
+        return working_graph, final_resistance
+
+# ======= Example Circuits =======
+
+# Circuit 1: Series-Parallel Combination (Already in your code)
 G1 = nx.Graph()
 G1.add_edge('start', 'A', resistance=4)
 G1.add_edge('A', 'C', resistance=2)
@@ -231,11 +444,11 @@ pos1 = {
     'end': (3, 0)
 }
 
-# ======= Example Circuit 2 =======
+# Circuit 2: Parallel Configuration (Already in your code)
 G2 = nx.MultiGraph()
 G2.add_edge('start', 'C', resistance=6)
 G2.add_edge('start', 'C', resistance=12)
-G2.add_edge('C', 'end', resistance=6)
+G2.add_edge('C', 'end', resistance=6) # This edge is in series with the parallel start-C combination
 
 pos2 = {
     'start': (0, 0),
@@ -243,27 +456,55 @@ pos2 = {
     'end': (6, 0)
 }
 
+# --- NEW: Pure Parallel Circuit Example ---
+G_paralel = nx.MultiGraph()
+G_paralel.add_edge('bas', 'son', resistance=10)
+G_paralel.add_edge('bas', 'son', resistance=15)
+G_paralel.add_edge('bas', 'son', resistance=30)
 
-def run_and_visualize(G, pos, source, sink, title):
-    print(f"\n{title}")
-    draw_circuit(G, pos, f"{title} - Original Circuit")
-
-    final_res, steps = equivalent_resistance_with_visualization(G, source, sink)
-    print(f"Final Equivalent Resistance between '{source}' and '{sink}': {final_res} Ω")
-
-    for i, step_edges in enumerate(steps):
-        step_title = f"{title} - Simplification Step {i + 1}"
-        highlight = [edge for group in step_edges for edge in group]
-        draw_circuit(G, pos, step_title, highlight_paths=[highlight])
+pos_paralel = {
+    'bas': (0, 0),
+    'son': (1, 0)
+}
+# ----------------------------------------
 
 
-# Run and visualize both circuits
-run_and_visualize(G1, pos1, 'start', 'end', "Circuit 1: Parallel-Series Combination")
-run_and_visualize(G2, pos2, 'start', 'end', "Circuit 2: Parallel Configuration")
+# Create analyzer instance
+analyzer = ResistorNetworkAnalyzer()
+
+# Analyze first circuit
+print("\nAnalyzing Circuit 1")
+simplified_G1, R_eq1 = analyzer.simplify_network(G1, pos1, 'start', 'end')
+if R_eq1 is not None:
+    print(f"Result for Circuit 1: R_eq = {R_eq1:.2f}Ω")
+else:
+    print("Could not determine equivalent resistance for Circuit 1.")
+
+
+# Analyze second circuit
+print("\nAnalyzing Circuit 2")
+simplified_G2, R_eq2 = analyzer.simplify_network(G2, pos2, 'start', 'end')
+if R_eq2 is not None:
+     print(f"Result for Circuit 2: R_eq = {R_eq2:.2f}Ω")
+else:
+     print("Could not determine equivalent resistance for Circuit 2.")
+
+
+# --- Analyze the Pure Parallel Circuit ---
+print("\nAnalyzing Pure Parallel Circuit")
+simplified_G_paralel, R_eq_paralel = analyzer.simplify_network(G_paralel, pos_paralel, 'bas', 'son')
+if R_eq_paralel is not None:
+     print(f"Result for Pure Parallel Circuit: R_eq = {R_eq_paralel:.2f}Ω")
+else:
+     print("Could not determine equivalent resistance for Pure Parallel Circuit.")
+# ------------------------------------------
 ```
 
-![alt text](image-1.png)
+![alt text](image-4.png)
 
-![alt text](image-2.png)
+![alt text](image-6.png)
 
-![alt text](image-3.png)
+![alt text](image-5.png)
+
+![alt text](image-7.png)
+
