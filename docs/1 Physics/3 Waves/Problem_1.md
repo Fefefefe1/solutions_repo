@@ -162,4 +162,6 @@ generate_gif(polygon_vertices(5))
 
 ![alt text](image-3.png)
 
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/macbook/Desktop/wave_interference.gif?version%3D1749537566450)
+![alt text](image-4.png)
+
+https://colab.research.google.com/drive/1GImm8jio13sISK9PdQKQbj1C7dazOsn5#scrollTo=2IttTub0hi65
