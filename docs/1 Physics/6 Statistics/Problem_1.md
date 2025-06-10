@@ -116,6 +116,8 @@ if __name__ == "__main__":
     pops = {name: generate_population(name, **params) for name, params in dists.items()}
     sizes = [5, 10, 30, 50]
     plot_sampling_dists(pops, sizes)
-    ```
+ ```
 
   ![alt text](image.png)
+
+  [visit my collab](https://colab.research.google.com/drive/12SlUvw8qFI7DTVvovEdmOXygjMjgHR8D?usp=sharing)
