@@ -376,33 +376,33 @@ print(f"Calculated g: {g:.3f} ± {delta_g:.3f} m/s²")
 
 # --- Plot 1: T10 measurements with mean line ---
 plt.figure(figsize=(8, 4))
-plt.plot(T10_measurements, 'o-', label='Measurements')
-plt.axhline(y=T10_mean, color='red', linestyle='--', label=f'Mean = {T10_mean:.2f}s')
-plt.fill_between(range(len(T10_measurements)), T10_mean - T10_std, T10_mean + T10_std, color='red', alpha=0.1, label='±1σ')
-plt.title("Time for 10 Oscillations")
-plt.xlabel("Trial")
-plt.ylabel("Time (s)")
-plt.legend()
-plt.grid(True)
+plt.plot(T10_measurements, 'o-', color='purple', label='Measurements', linewidth=1.5, markersize=8)
+plt.axhline(y=T10_mean, color='purple', linestyle='-.', label=f'Mean = {T10_mean:.2f}s', linewidth=1.5)
+plt.fill_between(range(len(T10_measurements)), T10_mean - T10_std, T10_mean + T10_std, color='purple', alpha=0.2, label='±1σ')
+plt.title("Time for 10 Oscillations", fontsize=12, pad=10)
+plt.xlabel("Trial", fontsize=10)
+plt.ylabel("Time (s)", fontsize=10)
+plt.legend(fontsize=8, loc='upper right')
+plt.grid(True, linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
 
 # --- Plot 2: Convergence of g estimation ---
 g_estimates = (4 * np.pi**2 * L) / (T10_measurements / 10)**2
 plt.figure(figsize=(8, 4))
-plt.plot(g_estimates, 'o-', label='g estimates per trial')
-plt.axhline(y=g, color='green', linestyle='--', label=f'Average g = {g:.2f} m/s²')
-plt.axhline(y=9.81, color='black', linestyle=':', label='Standard g = 9.81 m/s²')
-plt.title("Estimation of g Over Trials")
-plt.xlabel("Trial")
-plt.ylabel("g (m/s²)")
-plt.legend()
-plt.grid(True)
+plt.plot(g_estimates, 'o-', color='orange', label='g estimates per trial', linewidth=1.5, markersize=8)
+plt.axhline(y=g, color='blue', linestyle='-.', label=f'Average g = {g:.2f} m/s²', linewidth=1.5)
+plt.axhline(y=9.81, color='gray', linestyle=':', label='Standard g = 9.81 m/s²', linewidth=1.5)
+plt.title("Estimation of g Over Trials", fontsize=12, pad=10)
+plt.xlabel("Trial", fontsize=10)
+plt.ylabel("g (m/s²)", fontsize=10)
+plt.legend(fontsize=8, loc='upper right')
+plt.grid(True, linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
 </code></pre>
-<p><img alt="alt text" src="../image.png"/></p>
-<p><img alt="alt text" src="../image-1.png"/></p>
+<p><img alt="alt text" src="../image-2.png"/></p>
+<p><img alt="alt text" src="../image-3.png"/></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
