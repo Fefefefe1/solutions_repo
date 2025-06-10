@@ -283,8 +283,50 @@ if __name__ == "__main__":
     print("\nRunning Convergence Analysis:")
     convergence_analysis()
 </code></pre>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Parameters
+n_needles = 100000
+needle_length = 1.0
+line_spacing = 2.0
+
+# Generate random positions and angles
+x = np.random.uniform(0, line_spacing, n_needles)  # x-coordinate of needle center
+y = np.random.uniform(0, 10, n_needles)  # y-coordinate (to spread vertically)
+theta = np.random.uniform(0, np.pi, n_needles)  # Angle of needle
+
+# Calculate endpoints of needles
+x1 = x - (needle_length / 2) * np.cos(theta)
+y1 = y - (needle_length / 2) * np.sin(theta)
+x2 = x + (needle_length / 2) * np.cos(theta)
+y2 = y + (needle_length / 2) * np.sin(theta)
+
+# Count needles crossing a line
+crossings = np.floor(x1 / line_spacing) != np.floor(x2 / line_spacing)
+pi_estimate = 2 * n_needles / np.sum(crossings)
+
+# Plotting
+plt.figure(figsize=(10, 6))
+for i in range(n_needles):
+    if crossings[i]:
+        plt.plot([x1[i], x2[i]], [y1[i], y2[i]], 'b-', alpha=0.1)  # Crossed needles
+    else:
+        plt.plot([x1[i], x2[i]], [y1[i], y2[i]], 'r-', alpha=0.1)  # Non-crossed needles
+plt.axvline(0, color='k', linestyle='--')
+plt.axvline(2, color='k', linestyle='--')
+plt.axvline(4, color='k', linestyle='--')
+plt.axvline(6, color='k', linestyle='--')
+plt.axvline(8, color='k', linestyle='--')
+plt.axvline(10, color='k', linestyle='--')
+plt.title(f"Buffon's Needle Simulation ({n_needles} Needles)\nπ Estimate: {pi_estimate:.4f}")
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True)
+plt.show()
+</code></pre>
 <p><img alt="alt text" src="../image-2.png"/></p>
-<p><img alt="alt text" src="../image-3.png"/></p>
+<p><img alt="alt text" src="../image-4.png"/></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
