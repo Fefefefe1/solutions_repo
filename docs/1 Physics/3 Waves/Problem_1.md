@@ -151,7 +151,7 @@ def generate_gif(positions, filename="interference_pentagon.gif", frames=60):
   ani.save(filename, writer='pillow')
   plt.close()
 
-generate_gif(polygon_vertices(5))  # Generates 'interference_pentagon.gif'
+generate_gif(polygon_vertices(5))  
 ```
 
 ![alt text](image.png)
@@ -161,3 +161,4 @@ generate_gif(polygon_vertices(5))  # Generates 'interference_pentagon.gif'
 ![alt text](image-2.png)
 
 ![alt text](image-3.png)
+
