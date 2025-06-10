@@ -148,8 +148,8 @@ for v in velocities:
 plt.figure(figsize=(8, 8))
 for v, traj in crashes:
     plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
-plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
-plt.scatter(0, 0, color='blue')
+plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='green', alpha=0.3))
+plt.scatter(0, 0, color='green')
 plt.title("Trajectories that Crash into Earth")
 plt.xlabel("X (m)")
 plt.ylabel("Y (m)")
@@ -165,8 +165,8 @@ plt.show()
 plt.figure(figsize=(8, 8))
 for v, traj in orbits:
     plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
-plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
-plt.scatter(0, 0, color='blue')
+plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='green', alpha=0.3))
+plt.scatter(0, 0, color='green')
 plt.title("Orbital Trajectories")
 plt.xlabel("X (m)")
 plt.ylabel("Y (m)")
@@ -182,8 +182,8 @@ plt.show()
 plt.figure(figsize=(8, 8))
 for v, traj in escapes:
     plt.plot(traj[:, 0], traj[:, 1], label=f"{v/1000:.1f} km/s")
-plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='blue', alpha=0.3))
-plt.scatter(0, 0, color='blue')
+plt.gca().add_patch(plt.Circle((0, 0), R_earth, color='green', alpha=0.3))
+plt.scatter(0, 0, color='green')
 plt.title("Trajectories that Escape Earth")
 plt.xlabel("X (m)")
 plt.ylabel("Y (m)")
@@ -195,12 +195,11 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
+![alt text](image-9.png)
 
-![alt text](image-6.png)
+![alt text](image-10.png)
 
-![alt text](image-7.png)
-
-![alt text](image-8.png)
+![alt text](image-11.png)
 
 ### Analysis and Discussion
 
