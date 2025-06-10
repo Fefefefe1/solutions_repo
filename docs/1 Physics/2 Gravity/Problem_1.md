@@ -41,6 +41,7 @@ $$G \frac{M}{r^2} = \frac{(2\pi r/T)^2}{r}$$
 Simplify the equation:
 
 $$G \frac{M}{r^2} = \frac{4\pi^2 r^2}{T^2 r}$$
+
 $$G \frac{M}{r^2} = \frac{4\pi^2 r}{T^2}$$
 
 Now, rearrange the equation to solve for \(T^2\):
