@@ -165,3 +165,4 @@ generate_gif(polygon_vertices(5))
 ![alt text](image-4.png)
 
 
+![alt text](wave_interference.gif)
