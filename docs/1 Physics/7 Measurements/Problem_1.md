@@ -16,16 +16,6 @@ Estimate the gravitational acceleration \(g\) by measuring the period of a simpl
 
 ---
 
-## Materials
-
-- String: 1.0–1.5 meters long
-- Mass: e.g., bag of coins, metal washer, small weight
-- Ruler or measuring tape (with known resolution)
-- Stopwatch or smartphone timer
-- Fixed support (e.g., hook, rod, table edge)
-
----
-
 ## Procedure
 
 ### 1. Setup
